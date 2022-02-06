@@ -2,6 +2,7 @@ import 'package:andromeda/views/componets/all_componets.dart';
 import 'package:andromeda/views/componets/metrics_container.dart';
 import 'package:flutter/material.dart';
 import 'andromeda_card.dart';
+import 'bmi_label.dart';
 
 class BmiCard extends StatelessWidget {
   final Color color;
@@ -14,9 +15,16 @@ class BmiCard extends StatelessWidget {
       title: 'BMI',
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          MetricsContainer(),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              BmiLabel(color: Colors.blue, text: 'Extreme Obese'),
+              SizedBox(height: 5,),
+              MetricsContainer(),
+            ],
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
