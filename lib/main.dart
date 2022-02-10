@@ -1,5 +1,7 @@
+import 'package:andromeda/views/componets/metrics_container.dart';
 import 'package:flutter/material.dart';
 import 'views/componets/all_componets.dart';
+import 'views/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,9 +17,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         textTheme: Theme.of(context).textTheme.apply(
-          bodyColor: Colors.white,
-          displayColor: Colors.white,
-        ),
+              bodyColor: Colors.white,
+              displayColor: Colors.white,
+            ),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -68,24 +70,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Dashboard'),
+        ),
+        body: HomePage(),
+        bottomNavigationBar: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          child: BottomNavigationBar(
+            selectedItemColor: Colors.green,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.insights),
+                label: 'Stats',
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _incrementCounter,
+          tooltip: 'Increment',
+          child: const Icon(Icons.add),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,// This trailing comma makes auto-formatting nicer for build methods.
       ),
-      body:BmiCard(color:Colors.pinkAccent),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
