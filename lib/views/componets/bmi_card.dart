@@ -21,7 +21,7 @@ class BmiCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              BmiLabel(color: Colors.blue, text: 'Extreme Obese'),
+              BmiLabel(color: Color(0xFFFF1744), text: 'Extreme Obese'),
               SizedBox(height: horizontalSpace,),
               MetricsContainer(),
             ],
@@ -30,33 +30,33 @@ class BmiCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildBmiRefs(context,
-                  color: Colors.green,
+                  color: Color(0xFF64B5F6),
                   title: 'Underweight',
                   subtitle: 'Less than 18.5'),
               const SizedBox(
                 height: horizontalSpace,
               ),
               _buildBmiRefs(context,
-                  color: Colors.blue,
+                  color: Color(0xFF00E676),
                   title: 'Normal',
                   subtitle: '18.5 to 24.9'),
               const SizedBox(
                 height: horizontalSpace,
               ),
               _buildBmiRefs(context,
-                  color: Colors.blue,
+                  color: Color(0xFFFF8A80),
                   title: 'Overweight',
                   subtitle: '25 to 29.9'),
               const SizedBox(
                 height: horizontalSpace,
               ),
               _buildBmiRefs(context,
-                  color: Colors.blue, title: 'Obese', subtitle: '18.5 to 24.9'),
+                  color: Color(0xFFFF5252), title: 'Obese', subtitle: '18.5 to 24.9'),
               const SizedBox(
                 height: horizontalSpace,
               ),
               _buildBmiRefs(context,
-                  color: Colors.blue,
+                  color: Color(0xFFFF1744),
                   title: 'Extreme Obese',
                   subtitle: '25 to 29.9'),
             ],

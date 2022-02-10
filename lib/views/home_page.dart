@@ -9,33 +9,46 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         Expanded(
           flex: 3,
           child: Row(
-            children: [
+            children: const [
               Expanded(
-                child: MeasurementCard(),
+                child: MeasurementCard(
+                  title: 'Weight',
+                  color: Color(0xFFA5D6A7),
+                ),
               ),
               Expanded(
-                child: MeasurementCard(),
+                child: MeasurementCard(
+                  title: 'Height',
+                  color: Color(0xFFA5D6A7),
+                ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         Expanded(
           flex: 5,
           child: Row(
-            children: [
+            children: const [
               Expanded(
-                child: BmiCard(color: Colors.red),
+                child: BmiCard(
+                  color: Color(0xFFCDDC39),
+                ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 10,),
-
+        const SizedBox(
+          height: 10,
+        ),
       ],
     );
   }
