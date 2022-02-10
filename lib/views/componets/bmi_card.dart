@@ -11,6 +11,7 @@ class BmiCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double horizontalSpace=20;
     return AndromedaCard(
       title: 'BMI',
       content: Row(
@@ -21,7 +22,7 @@ class BmiCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               BmiLabel(color: Colors.blue, text: 'Extreme Obese'),
-              SizedBox(height: 5,),
+              SizedBox(height: horizontalSpace,),
               MetricsContainer(),
             ],
           ),
@@ -33,26 +34,26 @@ class BmiCard extends StatelessWidget {
                   title: 'Underweight',
                   subtitle: 'Less than 18.5'),
               const SizedBox(
-                height: 10,
+                height: horizontalSpace,
               ),
               _buildBmiRefs(context,
                   color: Colors.blue,
                   title: 'Normal',
                   subtitle: '18.5 to 24.9'),
               const SizedBox(
-                height: 10,
+                height: horizontalSpace,
               ),
               _buildBmiRefs(context,
                   color: Colors.blue,
                   title: 'Overweight',
                   subtitle: '25 to 29.9'),
               const SizedBox(
-                height: 10,
+                height: horizontalSpace,
               ),
               _buildBmiRefs(context,
                   color: Colors.blue, title: 'Obese', subtitle: '18.5 to 24.9'),
               const SizedBox(
-                height: 10,
+                height: horizontalSpace,
               ),
               _buildBmiRefs(context,
                   color: Colors.blue,
