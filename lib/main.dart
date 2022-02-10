@@ -2,6 +2,7 @@ import 'package:andromeda/views/componets/metrics_container.dart';
 import 'package:flutter/material.dart';
 import 'views/componets/all_componets.dart';
 import 'views/home_page.dart';
+import 'theme/custom_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,22 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: Colors.white,
-              displayColor: Colors.white,
-            ),
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+      theme: CustomTheme.lightTheme,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -73,13 +59,14 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Dashboard'),
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text('Dashboard'),
         ),
         body: HomePage(),
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           child: BottomNavigationBar(
-            selectedItemColor: Colors.green,
+            selectedItemColor: Theme.of(context).primaryColor,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -93,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
           onPressed: _incrementCounter,
           tooltip: 'Increment',
           child: const Icon(Icons.add),

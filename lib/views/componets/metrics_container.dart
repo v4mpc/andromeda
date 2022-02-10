@@ -13,13 +13,11 @@ class MetricsContainer extends StatelessWidget {
         RichText(
           text: TextSpan(
               text: '1000',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.headline2!.fontSize),
+              style: Theme.of(context).textTheme.headline2,
               children:[
                 TextSpan(
                     text: 'Kg',
-                    style: TextStyle(fontWeight: FontWeight.w500,fontSize: Theme.of(context).textTheme.caption!.fontSize)
+                    style: Theme.of(context).textTheme.caption
                 )
               ]
           ),
@@ -28,7 +26,7 @@ class MetricsContainer extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: MobilityIndicator(number: 12),
         ),
-        Text('4 days ago')
+        Text('4 days ago',style: TextStyle(color:Theme.of(context).textTheme.caption!.color),)
       ],
     );
   }

@@ -23,16 +23,16 @@ class MobilityIndicator extends StatelessWidget {
                 Text(
                   number < 0
                       ? '-${number.toString()}'
-                      : '+${number.toString()}',
+                      : '+${number.toString()}',style: TextStyle(color:Theme.of(context).textTheme.caption!.color ),
                 ),
                 number < 0
                     ? Icon(
                         Icons.arrow_downward,
-                        color: Theme.of(context).textTheme.bodyText1!.color,
+                        color: Theme.of(context).textTheme.caption!.color,
                       )
                     : Icon(
                         Icons.arrow_upward,
-                        color: Theme.of(context).textTheme.bodyText1!.color,
+                        color: Theme.of(context).textTheme.caption!.color,
                       ),
               ],
             ),

@@ -95,11 +95,11 @@ class BmiCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(fontSize: 18),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     subtitle,
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                 ],
               )

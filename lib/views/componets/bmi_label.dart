@@ -18,7 +18,7 @@ class BmiLabel extends StatelessWidget {
         padding: const EdgeInsets.all(7),
         child: Text(
           text,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.subtitle2,
         ),
       ),
     );
