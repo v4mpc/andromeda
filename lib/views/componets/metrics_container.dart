@@ -12,14 +12,14 @@ class MetricsContainer extends StatelessWidget {
       children: [
         RichText(
           text: TextSpan(
-              text: '1000 ',
+              text: '1000',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.headline5!.fontSize),
+                  fontSize: Theme.of(context).textTheme.headline2!.fontSize),
               children:[
                 TextSpan(
                     text: 'Kg',
-                    style: TextStyle(fontWeight: FontWeight.w400,fontSize: Theme.of(context).textTheme.caption!.fontSize)
+                    style: TextStyle(fontWeight: FontWeight.w500,fontSize: Theme.of(context).textTheme.caption!.fontSize)
                 )
               ]
           ),
