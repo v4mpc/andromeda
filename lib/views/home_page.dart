@@ -1,8 +1,10 @@
 import 'package:andromeda/views/componets/metrics_container.dart';
 import 'package:flutter/material.dart';
 import 'componets/all_componets.dart';
+import 'package:andromeda/views/measurement_input_page.dart';
 
 class HomePage extends StatelessWidget {
+  static const route='/homepage';
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -74,7 +76,9 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: (){},
+        onPressed: (){
+          Navigator.of(context).pushNamed(MeasurementInputPage.route);
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

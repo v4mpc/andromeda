@@ -7,6 +7,11 @@ class CustomTheme {
 
   static ThemeData get lightTheme {
     return ThemeData.light().copyWith(
+        // inputDecorationTheme:baseLight.inputDecorationTheme.copyWith(
+        //   labelStyle: baseLight.inputDecorationTheme.floatingLabelStyle?.copyWith(
+        //     color: primaryColor
+        //   ),
+        // ),
       primaryColor: primaryColor,
       textTheme: baseLight.textTheme.copyWith(
         headline2: baseLight.textTheme.headline2!.copyWith(

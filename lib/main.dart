@@ -11,15 +11,18 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: CustomTheme.lightTheme,
-      home: MeasurementInputPage(),
+      routes: {
+        '/': (context) => HomePage(),
+        HomePage.route: (context) => HomePage(),
+        MeasurementInputPage.route: (context) => MeasurementInputPage(),
+      },
+      initialRoute: '/',
     );
   }
 }
-
-
-
