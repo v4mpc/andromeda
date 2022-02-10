@@ -10,13 +10,21 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/widgets.dart';
+import 'repositories/database/base_model.dart';
+import 'services/service.dart';
 
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // runApp(const MyApp());
+
+  WeightService wService=WeightService();
+  final lw=await wService.getLatestWeight();
+  print(lw);
+
 }
 
-void dbFunction()async{
+void dbFunction() async {
   // Avoid errors caused by flutter upgrade.
   // Importing 'package:flutter/widgets.dart' is required.
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +33,7 @@ void dbFunction()async{
     // Set the path to the database. Note: Using the `join` function from the
     // `path` package is best practice to ensure the path is correctly
     // constructed for each platform.
-    join(await getDatabasesPath(), 'doggie_database.db'),
+    join(await getDatabasesPath(), 'andromeda_database.db'),
     // When the database is first created, create a table to store dogs.
     onCreate: (db, version) {
       // Run the CREATE TABLE statement on the database.
