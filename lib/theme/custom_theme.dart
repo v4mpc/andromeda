@@ -18,10 +18,7 @@ class CustomTheme {
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
-        subtitle1: baseLight.textTheme.subtitle1!.copyWith(
-          color: Colors.white,
 
-        ),
         subtitle2: baseLight.textTheme.subtitle2!.copyWith(
           fontWeight: FontWeight.bold,
           color: Colors.white,

@@ -9,13 +9,22 @@ import '../../models/all_models.dart';
 
 class BmiCard extends StatelessWidget {
   final Color color;
+  final List<BmiRef> _bmiRefs = const [
+    BmiRef(range: [1, 18.5], color: Color(0xFF64B5F6), name: 'Underweight'),
+    BmiRef(range: [18.5, 24.9], color: Color(0xFF00E676), name: 'Normal'),
+    BmiRef(range: [25, 29.9], color: Color(0xFFFF8A80), name: 'Overweight'),
+    BmiRef(range: [30, 34.9], color: Color(0xFFFF5252), name: 'Obese'),
+    BmiRef(range: [35, 100], color: Color(0xFFFF1744), name: 'Extreme Obese'),
+  ];
 
   const BmiCard({Key? key, required this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final BmiMeasurement? _bmiMeasurement = Provider.of<BmiMeasurement?>(context);
-
+    // print('build bmi called');
+    final BmiMeasurement? _bmiMeasurement =
+        Provider.of<BmiMeasurement?>(context);
+    final BmiRef? foundRef = findBmiRef(_bmiMeasurement?.value);
     const double horizontalSpace = 20;
     return AndromedaCard(
       title: 'BMI',
@@ -25,56 +34,53 @@ class BmiCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              BmiLabel(color: Color(0xFFFF1744), text: 'Extreme Obese'),
+              if (foundRef != null)
+                BmiLabel(color: foundRef.color, text: foundRef.name),
               SizedBox(
                 height: horizontalSpace,
               ),
               MetricsContainer(
-              measurement:_bmiMeasurement,
+                measurement: _bmiMeasurement,
               ),
             ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildBmiRefs(context,
-                  color: Color(0xFF64B5F6),
-                  title: 'Underweight',
-                  subtitle: 'Less than 18.5'),
-              const SizedBox(
-                height: horizontalSpace,
-              ),
-              _buildBmiRefs(context,
-                  color: Color(0xFF00E676),
-                  title: 'Normal',
-                  subtitle: '18.5 to 24.9'),
-              const SizedBox(
-                height: horizontalSpace,
-              ),
-              _buildBmiRefs(context,
-                  color: Color(0xFFFF8A80),
-                  title: 'Overweight',
-                  subtitle: '25 to 29.9'),
-              const SizedBox(
-                height: horizontalSpace,
-              ),
-              _buildBmiRefs(context,
-                  color: Color(0xFFFF5252),
-                  title: 'Obese',
-                  subtitle: '18.5 to 24.9'),
-              const SizedBox(
-                height: horizontalSpace,
-              ),
-              _buildBmiRefs(context,
-                  color: Color(0xFFFF1744),
-                  title: 'Extreme Obese',
-                  subtitle: '25 to 29.9'),
-            ],
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: _bmiRefs.map((BmiRef e) {
+              String _subs = '';
+              if (e.range[0] == 1) {
+                _subs = 'Less than ${e.range[1]}';
+              } else if (e.range[1] == 100) {
+                _subs = 'Greater than than ${e.range[0]}';
+              } else {
+                _subs = '${e.range[0]} to ${e.range[0]}';
+              }
+              return Column(
+                children: [
+                  _buildBmiRefs(context,
+                      color: e.color, title: e.name, subtitle: _subs),
+                  if (e.range[1] != 100)
+                    const SizedBox(
+                      height: horizontalSpace,
+                    )
+                ],
+              );
+            }).toList(),
           )
         ],
       ),
       color: color,
     );
+  }
+
+  BmiRef? findBmiRef(num? value) {
+    if (value!=null) {
+      return _bmiRefs
+        .where((BmiRef el) => value >= el.range[0] && value <= el.range[1])
+        .toList()[0];
+    }
+    return null;
   }
 
   Widget _buildColoredBox(BuildContext context, Color color) {

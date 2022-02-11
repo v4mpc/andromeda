@@ -162,11 +162,14 @@ class DBSingleton {
         'id': 5,
         'measurement_type_id': 3,
         'unit_id': 3,
-        'value': 24,
+        'value': 2,
         'created_at': '2022-01-23'
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+
+
+
   }
 
   Future measurements(query) async {
