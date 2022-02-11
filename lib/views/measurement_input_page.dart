@@ -141,7 +141,7 @@ class MeasurementInputPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: ()async{
                           // final form = _formKey.currentState;
                           // if (!form!.validate()) {
                           //   return;
@@ -169,8 +169,7 @@ class MeasurementInputPage extends StatelessWidget {
                             );
                           }
 
-                          // print(formData);
-                          Provider.of<AppService>(context,listen: false).saveList(formData);
+                          await Provider.of<AppService>(context,listen: false).saveMeasurements(formData);
                           Navigator.of(context).pop();
                         },
                         style: ElevatedButton.styleFrom(

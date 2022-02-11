@@ -10,6 +10,7 @@ class AppService with ChangeNotifier{
     if (latestHeights.isEmpty) {
       return null;
     }
+    print(latestHeights);
     if (latestHeights.length == 1) {
       final myMap = latestHeights[0];
       Map<String, Object?> map = Map<String, Object?>.from(myMap);
@@ -117,6 +118,7 @@ class AppService with ChangeNotifier{
     for(var m in measurements){
       await _databaseService.insertMeasurement(m.toMap());
     }
+    notifyListeners();
   }
 
   void saveList(List<FormData> measurements){
