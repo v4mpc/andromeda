@@ -1,7 +1,8 @@
 import '../repositories/database.dart';
 import '../models/all_models.dart';
+import 'package:flutter/foundation.dart';
 
-class WeightService {
+class WeightService with ChangeNotifier{
   final DBSingleton _databaseService = DBSingleton();
 
   Future<Measurement?> getLatestWeight() async {
@@ -31,8 +32,29 @@ class WeightService {
     }
   }
 
+  Future<Measurement?> get measurement async{
+    return await getLatestWeight();
+  }
+
+
+
   Future<void> saveWeight(Measurement measurement) async {
-    // todo:: COntinue from here
+    // todo:: Continue from here
     await _databaseService.insertMeasurement(measurement.toMap());
+  }
+
+  Future<List<MeasurementType>> getAllWeightUnits() async {
+    final List weights = await _databaseService.getWeightUnits();
+    return List.generate(weights.length, (i) {
+      return MeasurementType.fromMap(weights[i]);
+    });
+  }
+
+
+  Future<List<MeasurementType>> getAllHeightUnits() async {
+    final List heights = await _databaseService.getHeightUnits();
+    return List.generate(heights.length, (i) {
+      return MeasurementType.fromMap(heights[i]);
+    });
   }
 }

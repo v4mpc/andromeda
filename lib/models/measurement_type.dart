@@ -15,4 +15,11 @@ class MeasurementType {
   String toString() {
     return 'MeasurementType{id: $id, name: $name}';
   }
+
+  factory MeasurementType.fromMap(Map<String,dynamic> map){
+    return MeasurementType(
+      id: map['id'],
+      name: map['id']
+    );
+  }
 }

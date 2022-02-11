@@ -5,10 +5,11 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-
 class DBSingleton {
   static final DBSingleton _dbSingleton = DBSingleton._internal();
+
   factory DBSingleton() => _dbSingleton;
+
   DBSingleton._internal();
 
   static const _dbName = 'andromeda.db';
@@ -121,7 +122,6 @@ class DBSingleton {
     return measurements('$baseMeasurementQuery $query');
   }
 
-
   Future<void> insertMeasurement(data) async {
     final db = await database;
     await db.insert(
@@ -129,5 +129,16 @@ class DBSingleton {
       data,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+
+  }
+
+  Future getWeightUnits() async {
+    final db = await database;
+    return db.query('units');
+  }
+
+  Future getHeightUnits() async {
+    final db = await database;
+    return db.query('measurements_types');
   }
 }

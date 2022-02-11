@@ -1,3 +1,4 @@
+import 'package:andromeda/models/all_models.dart';
 import 'package:andromeda/views/componets/metrics_container.dart';
 import 'package:flutter/material.dart';
 import 'views/componets/all_componets.dart';
@@ -12,15 +13,15 @@ import 'package:sqflite/sqflite.dart';
 import 'package:flutter/widgets.dart';
 import 'repositories/database/base_model.dart';
 import 'services/service.dart';
-
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // runApp(const MyApp());
+  runApp(const MyApp());
 
-  WeightService wService=WeightService();
-  final lw=await wService.getLatestWeight();
-  print(lw);
+  // WeightService wService=WeightService();
+  // final lw=await wService.getLatestWeight();
+  // print(lw);
 
 }
 
@@ -173,15 +174,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: CustomTheme.lightTheme,
-      routes: {
-        '/': (context) => HomePage(),
-        HomePage.route: (context) => HomePage(),
-        MeasurementInputPage.route: (context) => MeasurementInputPage(),
-      },
-      initialRoute: '/',
+    return FutureProvider<Measurement?>(
+      initialData:null,
+      create: (context)=>WeightService().getLatestWeight(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: CustomTheme.lightTheme,
+        routes: {
+          '/': (context) => HomePage(),
+          HomePage.route: (context) => HomePage(),
+          MeasurementInputPage.route: (context) => MeasurementInputPage(),
+        },
+        initialRoute: '/',
+      ),
     );
   }
 }

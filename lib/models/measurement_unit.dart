@@ -14,6 +14,13 @@ class MeasurementUnit{
     };
   }
 
+  factory MeasurementUnit.fromMap(Map<String,dynamic> map){
+    return MeasurementUnit(
+        id: map['id'],
+        name: map['id']
+    );
+  }
+
   @override
   String toString() {
     return 'Unit{id: $id, name: $name}';
