@@ -69,6 +69,13 @@ class DBSingleton {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
+
+    await db.insert(
+      'units',
+      {'id': 3, 'name': 'Bmi'},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
     await db.execute(
       'CREATE TABLE measurement_types(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT)',
     );
@@ -82,6 +89,12 @@ class DBSingleton {
     await db.insert(
       'measurement_types',
       {'id': 2, 'name': 'HEIGHT'},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
+    await db.insert(
+      'measurement_types',
+      {'id': 3, 'name': 'BMI'},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
@@ -103,6 +116,57 @@ class DBSingleton {
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+
+    await db.insert(
+      'measurements',
+      {
+        'id': 2,
+        'measurement_type_id': 1,
+        'unit_id': 1,
+        'value': 70,
+        'created_at': '2022-01-23'
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
+
+    await db.insert(
+      'measurements',
+      {
+        'id': 3,
+        'measurement_type_id': 1,
+        'unit_id': 1,
+        'value': 89.1,
+        'created_at': '2022-01-23'
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
+
+    await db.insert(
+      'measurements',
+      {
+        'id': 4,
+        'measurement_type_id': 2,
+        'unit_id': 2,
+        'value': 170.2,
+        'created_at': '2022-01-23'
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
+
+    await db.insert(
+      'measurements',
+      {
+        'id': 5,
+        'measurement_type_id': 3,
+        'unit_id': 3,
+        'value': 24,
+        'created_at': '2022-01-23'
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future measurements(query) async {
@@ -118,6 +182,12 @@ class DBSingleton {
 
   Future getLatestHeight() {
     const query = "WHERE MT.name='HEIGHT'"
+        "ORDER BY M.id DESC LIMIT 2";
+    return measurements('$baseMeasurementQuery $query');
+  }
+
+  Future getLatestBmi() {
+    const query = "WHERE MT.name='BMI'"
         "ORDER BY M.id DESC LIMIT 2";
     return measurements('$baseMeasurementQuery $query');
   }

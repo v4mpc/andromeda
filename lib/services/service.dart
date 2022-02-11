@@ -2,10 +2,67 @@ import '../repositories/database.dart';
 import '../models/all_models.dart';
 import 'package:flutter/foundation.dart';
 
-class WeightService with ChangeNotifier{
+class AppService with ChangeNotifier{
   final DBSingleton _databaseService = DBSingleton();
 
-  Future<Measurement?> getLatestWeight() async {
+  Future<HeightMeasurement?> getLatestHeight() async {
+    final List latestHeights = await _databaseService.getLatestHeight();
+    if (latestHeights.isEmpty) {
+      return null;
+    }
+    if (latestHeights.length == 1) {
+      final myMap = latestHeights[0];
+      Map<String, Object?> map = Map<String, Object?>.from(myMap);
+      map['mobility'] = 0;
+      return HeightMeasurement.fromMap(map);
+    }
+
+    if (latestHeights.length == 2) {
+      final myMap = latestHeights[0];
+      final mobility = myMap['value'] - latestHeights[1]['value'];
+
+      // get the first record
+      Map<String, Object?> map = Map<String, Object?>.from(myMap);
+      map['mobility'] = mobility.floor();
+      return HeightMeasurement.fromMap(map);
+    }
+
+    if (latestHeights.length > 2) {
+      throw Exception('More than two rows where returned');
+    }
+  }
+
+
+
+  Future<BmiMeasurement?> getLatestBmi() async {
+    final List latestBmis = await _databaseService.getLatestBmi();
+    if (latestBmis.isEmpty) {
+      return null;
+    }
+    if (latestBmis.length == 1) {
+      final myMap = latestBmis[0];
+      Map<String, Object?> map = Map<String, Object?>.from(myMap);
+      map['mobility'] = 0;
+      return BmiMeasurement.fromMap(map);
+    }
+
+    if (latestBmis.length == 2) {
+      final myMap = latestBmis[0];
+      final mobility = myMap['value'] - latestBmis[1]['value'];
+
+      // get the first record
+      Map<String, Object?> map = Map<String, Object?>.from(myMap);
+      map['mobility'] = mobility.floor();
+      return BmiMeasurement.fromMap(map);
+    }
+
+    if (latestBmis.length > 2) {
+      throw Exception('More than two rows where returned');
+    }
+  }
+
+
+  Future<WeightMeasurement?> getLatestWeight() async {
     final List latestWeights = await _databaseService.getLatestWeight();
     if (latestWeights.isEmpty) {
       return null;
@@ -14,7 +71,7 @@ class WeightService with ChangeNotifier{
       final myMap = latestWeights[0];
       Map<String, Object?> map = Map<String, Object?>.from(myMap);
       map['mobility'] = 0;
-      return Measurement.fromMap(map);
+      return WeightMeasurement.fromMap(map);
     }
 
     if (latestWeights.length == 2) {
@@ -23,8 +80,8 @@ class WeightService with ChangeNotifier{
 
       // get the first record
       Map<String, Object?> map = Map<String, Object?>.from(myMap);
-      map['mobility'] = mobility;
-      return Measurement.fromMap(map);
+      map['mobility'] = mobility.floor();
+      return WeightMeasurement.fromMap(map);
     }
 
     if (latestWeights.length > 2) {
@@ -57,4 +114,7 @@ class WeightService with ChangeNotifier{
       return MeasurementType.fromMap(heights[i]);
     });
   }
+
+
+
 }

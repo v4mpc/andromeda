@@ -1,14 +1,21 @@
+import 'package:andromeda/models/all_models.dart';
+import 'package:andromeda/services/service.dart';
 import 'package:andromeda/views/componets/metrics_container.dart';
 import 'package:flutter/material.dart';
 import 'componets/all_componets.dart';
 import 'package:andromeda/views/measurement_input_page.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 
 class HomePage extends StatelessWidget {
-  static const route='/homepage';
+  static const route = '/homepage';
+
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final WeightMeasurement? _weightMeasurement = Provider.of<WeightMeasurement?>(context);
+    final HeightMeasurement? _heightMeasurement = Provider.of<HeightMeasurement?>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -22,17 +29,19 @@ class HomePage extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Row(
-              children: const [
+              children: [
                 Expanded(
                   child: MeasurementCard(
                     title: 'Weight',
                     color: Color(0xFFA5D6A7),
+                    measurement: _weightMeasurement,
                   ),
                 ),
                 Expanded(
                   child: MeasurementCard(
                     title: 'Height',
                     color: Color(0xFFA5D6A7),
+                    measurement: _heightMeasurement,
                   ),
                 ),
               ],
@@ -76,14 +85,14 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: (){
+        onPressed: () {
           Navigator.of(context).pushNamed(MeasurementInputPage.route);
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,// This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButtonLocation: FloatingActionButtonLocation
+          .centerDocked, // This trailing comma makes auto-formatting nicer for build methods.
     );
-
   }
 }

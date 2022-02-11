@@ -22,7 +22,6 @@ void main() async {
   // WeightService wService=WeightService();
   // final lw=await wService.getLatestWeight();
   // print(lw);
-
 }
 
 void dbFunction() async {
@@ -174,9 +173,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureProvider<Measurement?>(
-      initialData:null,
-      create: (context)=>WeightService().getLatestWeight(),
+    // return FutureProvider<Measurement?>(
+    //   initialData:null,
+    //   create: (_)=>AppService().getLatestWeight(),
+    //   child: MaterialApp(
+    //     title: 'Flutter Demo',
+    //     theme: CustomTheme.lightTheme,
+    //     routes: {
+    //       '/': (context) => HomePage(),
+    //       HomePage.route: (context) => HomePage(),
+    //       MeasurementInputPage.route: (context) => MeasurementInputPage(),
+    //     },
+    //     initialRoute: '/',
+    //   ),
+    // );
+
+    return MultiProvider(
+      providers: [
+        FutureProvider<WeightMeasurement?>(
+          initialData: null,
+          create: (_) => AppService().getLatestWeight(),
+        ),
+        FutureProvider<HeightMeasurement?>(
+          initialData: null,
+          create: (_) => AppService().getLatestHeight(),
+        ),
+
+        FutureProvider<BmiMeasurement?>(
+          initialData: null,
+          create: (_) => AppService().getLatestBmi(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: CustomTheme.lightTheme,

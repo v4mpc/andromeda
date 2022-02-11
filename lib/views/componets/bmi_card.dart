@@ -3,6 +3,9 @@ import 'package:andromeda/views/componets/metrics_container.dart';
 import 'package:flutter/material.dart';
 import 'andromeda_card.dart';
 import 'bmi_label.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
+import '../../models/all_models.dart';
 
 class BmiCard extends StatelessWidget {
   final Color color;
@@ -11,19 +14,24 @@ class BmiCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double horizontalSpace=20;
+    final BmiMeasurement? _bmiMeasurement = Provider.of<BmiMeasurement?>(context);
+
+    const double horizontalSpace = 20;
     return AndromedaCard(
       title: 'BMI',
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               BmiLabel(color: Color(0xFFFF1744), text: 'Extreme Obese'),
-              SizedBox(height: horizontalSpace,),
-              MetricsContainer(),
+              SizedBox(
+                height: horizontalSpace,
+              ),
+              MetricsContainer(
+              measurement:_bmiMeasurement,
+              ),
             ],
           ),
           Column(
@@ -51,7 +59,9 @@ class BmiCard extends StatelessWidget {
                 height: horizontalSpace,
               ),
               _buildBmiRefs(context,
-                  color: Color(0xFFFF5252), title: 'Obese', subtitle: '18.5 to 24.9'),
+                  color: Color(0xFFFF5252),
+                  title: 'Obese',
+                  subtitle: '18.5 to 24.9'),
               const SizedBox(
                 height: horizontalSpace,
               ),

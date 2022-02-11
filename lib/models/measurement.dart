@@ -19,13 +19,6 @@ class Measurement {
   });
 
   Map<String, dynamic> toMap() {
-    // return {
-    //   'id': id,
-    //   'date': date,
-    //   'value': value,
-    //   'type': type.toMap(),
-    //   'unit': unit.toMap()
-    // };
     return {
       'id': id,
       'measurement_type_id': type.id,
@@ -35,19 +28,61 @@ class Measurement {
     };
   }
 
-  factory Measurement.fromMap(Map<String, dynamic> map) {
-    return Measurement(
-      id: map['id'],
-      date: map['date'],
-      value: map['value'],
-      type: MeasurementType(id: map['mt_id'], name: map['mt_name']),
-      unit: MeasurementUnit(id: map['mu_id'], name: map['mu_name']),
-      mobility: map['mobility'],
-    );
-  }
+  Measurement.fromMap(Map<String, dynamic> map)
+      : id = map['id'],
+        date = map['date'],
+        value = map['value'],
+        type = MeasurementType(id: map['mt_id'], name: map['mt_name']),
+        unit = MeasurementUnit(id: map['mu_id'], name: map['mu_name']),
+        mobility = map['mobility'];
+
 
   @override
   String toString() {
     return 'Measurement{id: $id, date: $date, value: $value, type: ${type.toString()} unit: ${unit.toString()}, mobility: $mobility }';
   }
+}
+
+class HeightMeasurement extends Measurement {
+  HeightMeasurement(id, date, value, type, unit, mobility)
+      : super(
+            id: id,
+            date: date,
+            value: value,
+            type: type,
+            unit: unit,
+            mobility: mobility);
+
+
+  HeightMeasurement.fromMap(Map<String, dynamic> map)
+      : super.fromMap(map);
+}
+
+class WeightMeasurement extends Measurement {
+  WeightMeasurement(id, date, value, type, unit, mobility)
+      : super(
+            id: id,
+            date: date,
+            value: value,
+            type: type,
+            unit: unit,
+            mobility: mobility);
+
+  WeightMeasurement.fromMap(Map<String, dynamic> map)
+      : super.fromMap(map);
+}
+
+
+class BmiMeasurement extends Measurement {
+  BmiMeasurement(id, date, value, type, unit, mobility)
+      : super(
+      id: id,
+      date: date,
+      value: value,
+      type: type,
+      unit: unit,
+      mobility: mobility);
+
+  BmiMeasurement.fromMap(Map<String, dynamic> map)
+      : super.fromMap(map);
 }
