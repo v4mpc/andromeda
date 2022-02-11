@@ -9,6 +9,7 @@ import '../../models/all_models.dart';
 
 class BmiCard extends StatelessWidget {
   final Color color;
+  final BmiMeasurement? bmiMeasurement;
   final List<BmiRef> _bmiRefs = const [
     BmiRef(range: [1, 18.5], color: Color(0xFF64B5F6), name: 'Underweight'),
     BmiRef(range: [18.5, 24.9], color: Color(0xFF00E676), name: 'Normal'),
@@ -17,13 +18,13 @@ class BmiCard extends StatelessWidget {
     BmiRef(range: [35, 100], color: Color(0xFFFF1744), name: 'Extreme Obese'),
   ];
 
-  const BmiCard({Key? key, required this.color}) : super(key: key);
+  const BmiCard({Key? key, required this.color, this.bmiMeasurement})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // print('build bmi called');
-    final BmiMeasurement? _bmiMeasurement =
-        Provider.of<BmiMeasurement?>(context);
+    final BmiMeasurement? _bmiMeasurement = bmiMeasurement;
     final BmiRef? foundRef = findBmiRef(_bmiMeasurement?.value);
     const double horizontalSpace = 20;
     return AndromedaCard(
@@ -75,10 +76,10 @@ class BmiCard extends StatelessWidget {
   }
 
   BmiRef? findBmiRef(num? value) {
-    if (value!=null) {
+    if (value != null) {
       return _bmiRefs
-        .where((BmiRef el) => value >= el.range[0] && value <= el.range[1])
-        .toList()[0];
+          .where((BmiRef el) => value >= el.range[0] && value <= el.range[1])
+          .toList()[0];
     }
     return null;
   }

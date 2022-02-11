@@ -190,19 +190,20 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        FutureProvider<WeightMeasurement?>(
-          initialData: null,
-          create: (_) => AppService().getLatestWeight(),
-        ),
-        FutureProvider<HeightMeasurement?>(
-          initialData: null,
-          create: (_) => AppService().getLatestHeight(),
-        ),
-
-        FutureProvider<BmiMeasurement?>(
-          initialData: null,
-          create: (_) => AppService().getLatestBmi(),
-        ),
+        // FutureProvider<WeightMeasurement?>(
+        //   initialData: null,
+        //   create: (_) => AppService().getLatestWeight(),
+        // ),
+        // FutureProvider<HeightMeasurement?>(
+        //   initialData: null,
+        //   create: (_) => AppService().getLatestHeight(),
+        // ),
+        //
+        // FutureProvider<BmiMeasurement?>(
+        //   initialData: null,
+        //   create: (_) => AppService().getLatestBmi(),
+        // ),
+        ChangeNotifierProvider(create: (_)=>AppService())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

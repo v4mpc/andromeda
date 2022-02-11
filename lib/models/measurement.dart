@@ -86,3 +86,13 @@ class BmiMeasurement extends Measurement {
   BmiMeasurement.fromMap(Map<String, dynamic> map)
       : super.fromMap(map);
 }
+
+class FormData{
+  final String date;
+  final double value;
+  final int typeId;
+  final int unitId;
+  FormData({required this.date, required this.value,required this.typeId,required this.unitId});
+
+  FormData.fromMap(Map<String, dynamic> map):date=map['date'],value=map['value'],typeId=map['typeId'],unitId=map['unitId'];
+}

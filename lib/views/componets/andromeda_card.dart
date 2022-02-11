@@ -24,7 +24,7 @@ class AndromedaCard extends StatelessWidget {
           children:  [
             Text(
               title,
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.button,
             ),
             const SizedBox(
               height: 15,

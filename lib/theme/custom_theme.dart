@@ -7,12 +7,12 @@ class CustomTheme {
 
   static ThemeData get lightTheme {
     return ThemeData.light().copyWith(
-        // inputDecorationTheme:baseLight.inputDecorationTheme.copyWith(
-        //   labelStyle: baseLight.inputDecorationTheme.floatingLabelStyle?.copyWith(
-        //     color: primaryColor
-        //   ),
-        // ),
+        inputDecorationTheme:baseLight.inputDecorationTheme.copyWith(
+          focusColor: primaryColor,
+
+        ),
       primaryColor: primaryColor,
+
       textTheme: baseLight.textTheme.copyWith(
         headline2: baseLight.textTheme.headline2!.copyWith(
           fontWeight: FontWeight.bold,
@@ -24,6 +24,11 @@ class CustomTheme {
           color: Colors.white,
           // fontStyle: FontStyle.italic,
         ),
+          button: baseLight.textTheme.button!.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            // fontStyle: FontStyle.italic,
+          ),
         bodyText1: baseLight.textTheme.bodyText1!.copyWith(
           color: Colors.white,
           fontSize: 18,

@@ -32,8 +32,6 @@ class AppService with ChangeNotifier{
     }
   }
 
-
-
   Future<BmiMeasurement?> getLatestBmi() async {
     final List latestBmis = await _databaseService.getLatestBmi();
     if (latestBmis.isEmpty) {
@@ -113,6 +111,18 @@ class AppService with ChangeNotifier{
     return List.generate(heights.length, (i) {
       return MeasurementType.fromMap(heights[i]);
     });
+  }
+
+  Future<void> saveMeasurements(List<FormData> measurements) async{
+    for(var m in measurements){
+      await _databaseService.insertMeasurement(m);
+    }
+  }
+
+  void saveList(List<FormData> measurements){
+    // saveMeasurements(measurements);
+    print('Save list Called');
+    notifyListeners();
   }
 
 
