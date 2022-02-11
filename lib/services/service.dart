@@ -115,13 +115,13 @@ class AppService with ChangeNotifier{
 
   Future<void> saveMeasurements(List<FormData> measurements) async{
     for(var m in measurements){
-      await _databaseService.insertMeasurement(m);
+      await _databaseService.insertMeasurement(m.toMap());
     }
   }
 
   void saveList(List<FormData> measurements){
-    // saveMeasurements(measurements);
-    print('Save list Called');
+    saveMeasurements(measurements);
+    // print('Save list Called');
     notifyListeners();
   }
 

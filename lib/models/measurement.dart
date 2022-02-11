@@ -95,4 +95,13 @@ class FormData{
   FormData({required this.date, required this.value,required this.typeId,required this.unitId});
 
   FormData.fromMap(Map<String, dynamic> map):date=map['date'],value=map['value'],typeId=map['typeId'],unitId=map['unitId'];
+
+  Map<String, dynamic> toMap(){
+    return {
+      'measurement_type_id': typeId,
+      'unit_id': unitId,
+      'value': value,
+      'created_at': date
+    };
+  }
 }

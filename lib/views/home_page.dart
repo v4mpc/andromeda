@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     print('rebuilding dashboard tree');
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text('Dashboard'),
@@ -54,6 +55,7 @@ class HomePage extends StatelessWidget {
                     future: Provider.of<AppService>(context).getLatestHeight(),
                     builder: (context, AsyncSnapshot<dynamic> snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
+                        print('got height is ${snapshot.data}');
                         return MeasurementCard(
                           title: 'Height',
                           color: Color(0xFFA5D6A7),

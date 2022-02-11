@@ -163,7 +163,7 @@ class MeasurementInputPage extends StatelessWidget {
                               FormData.fromMap({
                                 'date': '2022-2-11',
                                 'typeId': 2,
-                                'unitId': 3,
+                                'unitId': 2,
                                 'value': double.parse(_heightController.text)
                               }),
                             );
@@ -171,6 +171,7 @@ class MeasurementInputPage extends StatelessWidget {
 
                           // print(formData);
                           Provider.of<AppService>(context,listen: false).saveList(formData);
+                          Navigator.of(context).pop();
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).primaryColor),
