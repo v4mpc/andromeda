@@ -85,8 +85,8 @@ class BmiCard extends StatelessWidget {
           if(value<e.range[1]){
             return e;
           }
-        } else if (e.range[0] == 100) {
-          if(value>e.range[1]){
+        } else if (e.range[1] == 100) {
+          if(value>e.range[0]){
             return e;
           }
         } else {
