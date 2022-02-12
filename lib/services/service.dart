@@ -151,4 +151,8 @@ class AppService with ChangeNotifier {
   double _calculateBmi(double height, double weight) {
     return weight / (height * height * 0.01 * 0.01);
   }
+
+  Future<void> getThisMonthWeights()async{
+    await _databaseService.getThisMonthWeights();
+  }
 }

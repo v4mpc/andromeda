@@ -2,6 +2,7 @@ import 'dart:async';
 import '../models/all_models.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:intl/intl.dart';
 
 class DBSingleton {
   static final DBSingleton _dbSingleton = DBSingleton._internal();
@@ -109,7 +110,7 @@ class DBSingleton {
         'measurement_type_id': 1,
         'unit_id': 1,
         'value': 80,
-        'created_at': '2022-01-23'
+        'created_at': '2022-01-2'
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -121,7 +122,7 @@ class DBSingleton {
         'measurement_type_id': 1,
         'unit_id': 1,
         'value': 70,
-        'created_at': '2022-01-23'
+        'created_at': '2022-02-03'
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -133,7 +134,7 @@ class DBSingleton {
         'measurement_type_id': 1,
         'unit_id': 1,
         'value': 89.1,
-        'created_at': '2022-01-23'
+        'created_at': '2022-02-05'
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -145,7 +146,7 @@ class DBSingleton {
         'measurement_type_id': 2,
         'unit_id': 2,
         'value': 170.2,
-        'created_at': '2022-01-23'
+        'created_at': '2022-02-16'
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -157,7 +158,7 @@ class DBSingleton {
         'measurement_type_id': 3,
         'unit_id': 3,
         'value': 2,
-        'created_at': '2022-01-23'
+        'created_at': '2022-02-23'
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -209,9 +210,13 @@ class DBSingleton {
   }
 
 
-  // SELECT id FROM things
-  // WHERE MONTH(happened_at) = 1 AND YEAR(happened_at) = 2009
+  Future getThisMonthWeights()async{
+    final db = await database;
+    final DateTime now = DateTime.now();
+    final String year=DateFormat('yyyy').format(now);
+    final String month=DateFormat('MM').format(now);
+    const String query="WHERE strftime('%m', M.created_at) = ? AND strftime('%Y', M.created_at) = ? AND M.measurement_type_id = ? ORDER by M.created_at ASC LIMIT 31";
+    return await db.rawQuery('$baseMeasurementQuery $query',[month,year,'1']);
+  }
 
-  // SELECT * FROM measurements
-  // WHERE strftime('%m', created_at) = '10' AND strftime('%Y', created_at) = '1992' ORDER by created_at ASC LIMIT 31
 }
