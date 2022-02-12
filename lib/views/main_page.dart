@@ -1,8 +1,5 @@
-import 'package:andromeda/services/service.dart';
 import 'package:flutter/material.dart';
-import 'componets/all_componets.dart';
 import 'package:andromeda/views/measurement_input_page.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'home_page.dart';
 import 'stats_page.dart';

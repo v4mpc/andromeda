@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 
 class MinMaxContainer extends StatelessWidget {
   final String title;
-  final String value;
-  final String unit;
-  final String date;
+  final String? value;
+  final String? unit;
+  final String? date;
   final Color color;
-  const MinMaxContainer({Key? key,required this.title,required this.value,required this.date,required this.color,required this.unit}) : super(key: key);
+
+  const MinMaxContainer(
+      {Key? key,
+      required this.title,
+      this.value,
+      this.date,
+      required this.color,
+      this.unit})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +44,14 @@ class MinMaxContainer extends StatelessWidget {
                 ),
                 RichText(
                   text: TextSpan(
-                    text: value,
+                    text: value??'-',
                     style: Theme.of(context)
                         .textTheme
                         .headline6!
                         .copyWith(fontSize: 40),
                     children: [
                       TextSpan(
-                        text: ' $unit',
+                        text: unit??'',
                         style: Theme.of(context)
                             .textTheme
                             .headline6!
@@ -52,7 +60,7 @@ class MinMaxContainer extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text(date)
+                Text(date??'-')
               ],
             )
           ],

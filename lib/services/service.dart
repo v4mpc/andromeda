@@ -151,11 +151,19 @@ class AppService with ChangeNotifier {
     return weight / (height * height * 0.01 * 0.01);
   }
 
-  Future<void> getThisMonthWeights()async{
+  Future<void> getThisMonthWeights() async {
     await _databaseService.getThisMonthWeights();
   }
 
-  Future<void> getMinMaxWeight()async{
-    await _databaseService.getMinMaxWeight();
+  Future<List<Measurement>> getMinMaxWeight() async {
+    final weights = await _databaseService.getMinMaxWeight();
+    final data = List.generate(weights.length, (i) {
+      Map<String, Object?> map = Map<String, Object?>.from(weights[i]);
+      map['mobility'] = 0;
+      return Measurement.fromMap(map);
+    });
+
+    return data;
+    // return
   }
 }

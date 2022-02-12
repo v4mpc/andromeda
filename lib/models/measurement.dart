@@ -16,7 +16,7 @@ class Measurement {
     required this.value,
     required this.type,
     required this.unit,
-    required this.mobility,
+    this.mobility=0,
   });
 
   Map<String, dynamic> toMap() {

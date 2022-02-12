@@ -4,10 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../views/componets/all_componets.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'dart:math';
+import 'package:intl/intl.dart';
+
 
 class StatsPage extends StatelessWidget {
   const StatsPage({Key? key}) : super(key: key);
+
+
+  String _formatDate(String stringDate){
+    final inputFormat = DateFormat('yyyy-MM-dd');
+    final inputDate = inputFormat.parse(stringDate);
+    final outputFormat = DateFormat('d MMM');
+    return outputFormat.format(inputDate);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,27 +25,73 @@ class StatsPage extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         title: Text('Statistics'),
       ),
-      body:Padding(
+      body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             Expanded(
               flex: 1,
-              child: Text('February 2022 Weights',style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 20),),
+              child: Text(
+                'February 2022 Weights',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(fontSize: 20),
+              ),
             ),
             Expanded(
               flex: 6,
               child: SimpleLineChart.withSampleData(),
             ),
-            SizedBox(height: 25,),
+            SizedBox(
+              height: 25,
+            ),
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MinMaxContainer(title: 'Maximum', value: '34', date: '3 Feb', color: Colors.red, unit: 'Kg'),
-                  MinMaxContainer(title: 'Minimum', value: '34', date: '3 Feb', color: Colors.blue, unit: 'Kg'),
-                ],
-              ),
+              child: FutureBuilder(
+                  future: Provider.of<AppService>(context).getMinMaxWeight(),
+                  builder:
+                      (context, AsyncSnapshot<dynamic> snapshot) {
+                    print('building');
+                    if (snapshot.connectionState==ConnectionState.done) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MinMaxContainer(
+                            title: 'Maximum',
+                            value: snapshot.data[0].value.toString(),
+                            date: _formatDate(snapshot.data[0].date),
+                            color: Colors.red,
+                            unit: snapshot.data[0].unit.name,
+                          ),
+                          MinMaxContainer(
+                            title: 'Minimum',
+                            value: snapshot.data[1].value.toString(),
+                            date: _formatDate(snapshot.data[1].date),
+                            color: Colors.blue,
+                            unit: snapshot.data[1].unit.name,
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MinMaxContainer(
+                              title: 'Maximum',
+                              value: null,
+                              date: null,
+                              color: Colors.red,
+                              unit: null),
+                          MinMaxContainer(
+                              title: 'Minimum',
+                              value: null,
+                              date: null,
+                              color: Colors.blue,
+                              unit: null),
+                        ],
+                      );
+                    }
+                  }),
               flex: 3,
             )
           ],
@@ -52,7 +107,6 @@ class SimpleLineChart extends StatelessWidget {
 
   SimpleLineChart(this.seriesList, {this.animate = false});
 
-  /// Creates a [LineChart] with sample data and no transition.
   factory SimpleLineChart.withSampleData() {
     return new SimpleLineChart(
       _createSampleData(),
@@ -107,13 +161,6 @@ class SimpleLineChart extends StatelessWidget {
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearWeights, int>> _createSampleData() {
-    // final data = [
-    //   LinearSales(0, 5),
-    //   LinearSales(1, 25),
-    //   LinearSales(2, 100),
-    //   LinearSales(3, 75),
-    // ];
-
     final data = [
       LinearWeights(0, 12),
       LinearWeights(1, 1),
@@ -136,20 +183,9 @@ class SimpleLineChart extends StatelessWidget {
   }
 }
 
-/// Sample linear data type.
-class LinearSales {
-  final int year;
-  final int sales;
-
-  LinearSales(this.year, this.sales);
-}
-
 class LinearWeights {
   final int date;
   final int weight;
 
   LinearWeights(this.date, this.weight);
 }
-
-//
-
