@@ -34,9 +34,9 @@ class DBSingleton {
 
   Future<Database> _init() async {
     final dbPath = join(await getDatabasesPath(), _dbName);
-    if (await databaseExists(dbPath)) {
-      await deleteDatabase(dbPath);
-    }
+    // if (await databaseExists(dbPath)) {
+    //   await deleteDatabase(dbPath);
+    // }
 
     return await openDatabase(dbPath,
         version: _dbVersion, onCreate: _onCreate, onConfigure: _onConfigure);
@@ -186,6 +186,8 @@ class DBSingleton {
         "ORDER BY M.id DESC LIMIT 2";
     return measurements('$baseMeasurementQuery $query');
   }
+
+  //TODO::add ability to reset all measurments; or the latest height or weight or height.
 
   Future<void> insertMeasurement(List<FormData> measurements) async {
     final db = await database;

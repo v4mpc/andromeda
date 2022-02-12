@@ -46,7 +46,6 @@ class StatsPage extends StatelessWidget {
                   builder:
                       (context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      // print(snapshot.data);
                       return SimpleLineChart(
                         measurements: snapshot.data,
                       );
@@ -131,19 +130,14 @@ class SimpleLineChart extends StatelessWidget {
     Map<int, String> labelRouter = {};
 
     for( int i = 1 ; i <= 31; i++ ){
-      // int dayDigit = _getDayDigit(m.date);
+
       labelRouter[i] = '$i ${_getMonthName(measurements[0].date)}';
     }
-    // for (var m in measurements) {
-    //   int dayDigit = _getDayDigit(m.date);
-    //   labelRouter[dayDigit] = _formatDate(m.date);
-    // }
+
     return labelRouter;
   }
   String xAxisTickFormatter(num? value) {
 
-    print(_labelRouter);
-    // print(value);
     if (_labelRouter.containsKey(value?.toInt())) {
       return _labelRouter[value?.toInt()]??'';
     } else {
@@ -153,7 +147,6 @@ class SimpleLineChart extends StatelessWidget {
 
   List<LinearWeights> generateChartData() {
     return List.generate(measurements.length, (index) {
-      print(_getDayDigit(measurements[index].date));
       return LinearWeights(
         _getDayDigit(measurements[index].date),
         measurements[index].value.toInt(),

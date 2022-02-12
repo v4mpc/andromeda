@@ -158,7 +158,6 @@ class AppService with ChangeNotifier {
       map['mobility'] = 0;
       return Measurement.fromMap(map);
     });
-    print(data);
     return data;
   }
 
