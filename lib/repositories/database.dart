@@ -210,4 +210,11 @@ class DBSingleton {
     final db = await database;
     return db.query('measurements_types');
   }
+
+
+  // SELECT id FROM things
+  // WHERE MONTH(happened_at) = 1 AND YEAR(happened_at) = 2009
+
+  // SELECT * FROM measurements
+  // WHERE strftime('%m', created_at) = '10' AND strftime('%Y', created_at) = '1992' ORDER by created_at ASC LIMIT 31
 }
