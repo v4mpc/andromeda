@@ -22,7 +22,7 @@ class MobilityIndicator extends StatelessWidget {
               children: [
                 Text(
                   number < 0
-                      ? '-${number.toString()}'
+                      ? number.toString()
                       : '+${number.toString()}',style: TextStyle(color:Theme.of(context).textTheme.caption!.color ),
                 ),
                 number < 0
