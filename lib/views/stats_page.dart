@@ -114,8 +114,11 @@ class StatsPage extends StatelessWidget {
 class SimpleLineChart extends StatelessWidget {
   final bool animate;
   List<Measurement> measurements;
+  Map _labelRouter={};
 
-  SimpleLineChart({required this.measurements, this.animate = false});
+  SimpleLineChart({required this.measurements, this.animate = false}){
+    _labelRouter=generateLabelRouter();
+  }
 
   String _formatDate(String stringDate) {
     final inputFormat = DateFormat('yyyy-MM-dd');
@@ -124,15 +127,25 @@ class SimpleLineChart extends StatelessWidget {
     return outputFormat.format(inputDate);
   }
 
-  String xAxisTickFormatter(num? value) {
+  Map generateLabelRouter(){
     Map<int, String> labelRouter = {};
-    for (var m in measurements) {
-      int dayDigit = _getDayDigit(m.date);
-      labelRouter[dayDigit] = _formatDate(m.date);
+
+    for( int i = 1 ; i <= 31; i++ ){
+      // int dayDigit = _getDayDigit(m.date);
+      labelRouter[i] = '$i ${_getMonthName(measurements[0].date)}';
     }
-    print(labelRouter);
-    if (labelRouter.containsKey(value?.toInt())) {
-      return labelRouter[value?.toInt()] ?? '';
+    // for (var m in measurements) {
+    //   int dayDigit = _getDayDigit(m.date);
+    //   labelRouter[dayDigit] = _formatDate(m.date);
+    // }
+    return labelRouter;
+  }
+  String xAxisTickFormatter(num? value) {
+
+    print(_labelRouter);
+    // print(value);
+    if (_labelRouter.containsKey(value?.toInt())) {
+      return _labelRouter[value?.toInt()]??'';
     } else {
       return '';
     }
@@ -140,6 +153,7 @@ class SimpleLineChart extends StatelessWidget {
 
   List<LinearWeights> generateChartData() {
     return List.generate(measurements.length, (index) {
+      print(_getDayDigit(measurements[index].date));
       return LinearWeights(
         _getDayDigit(measurements[index].date),
         measurements[index].value.toInt(),
@@ -147,11 +161,11 @@ class SimpleLineChart extends StatelessWidget {
     });
   }
 
-  int _getMonthDigit(String stringDate) {
+  String _getMonthName(String stringDate) {
     final inputFormat = DateFormat('yyyy-MM-dd');
     final inputDate = inputFormat.parse(stringDate);
-    final outputFormat = DateFormat('M');
-    return int.parse(outputFormat.format(inputDate));
+    final outputFormat = DateFormat('MMM');
+    return outputFormat.format(inputDate);
   }
 
   int _getDayDigit(String stringDate) {
