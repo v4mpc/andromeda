@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'views/home_page.dart';
+import 'views/main_page.dart';
 import 'views/measurement_input_page.dart';
 import 'theme/custom_theme.dart';
 import 'package:flutter/widgets.dart';
@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
         title: 'Andromeda',
         theme: CustomTheme.lightTheme,
         routes: {
-          '/': (context) => StatsPage(),
-          HomePage.route: (context) => HomePage(),
+          '/': (context) => MainPage(),
+          MainPage.route: (context) => MainPage(),
           MeasurementInputPage.route: (context) => MeasurementInputPage(),
         },
         initialRoute: '/',

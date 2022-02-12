@@ -11,37 +11,35 @@ class StatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          title: Text('Statistics'),
-        ),
-        body:Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Text('This Month Weight',style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 20),),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        title: Text('Statistics'),
+      ),
+      body:Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Text('February 2022 Weights',style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 20),),
+            ),
+            Expanded(
+              flex: 6,
+              child: SimpleLineChart.withSampleData(),
+            ),
+            SizedBox(height: 25,),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MinMaxContainer(title: 'Maximum', value: '34', date: '3 Feb', color: Colors.red, unit: 'Kg'),
+                  MinMaxContainer(title: 'Minimum', value: '34', date: '3 Feb', color: Colors.blue, unit: 'Kg'),
+                ],
               ),
-              Expanded(
-                flex: 6,
-                child: SimpleLineChart.withSampleData(),
-              ),
-              SizedBox(height: 25,),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    MinMaxContainer(title: 'Maximum', value: '34', date: '3 Feb', color: Colors.red, unit: 'Kg'),
-                    MinMaxContainer(title: 'Minimum', value: '34', date: '3 Feb', color: Colors.blue, unit: 'Kg'),
-                  ],
-                ),
-                flex: 3,
-              )
-            ],
-          ),
+              flex: 3,
+            )
+          ],
         ),
       ),
     );
@@ -65,19 +63,19 @@ class SimpleLineChart extends StatelessWidget {
 
   String xAxisTickFormatter(num? value) {
     if (value == 0) {
-      return "01 FEB";
+      return "1 FEB";
     } else if (value == 1) {
-      return "02 FEB";
+      return "2 FEB";
     } else if (value == 2) {
-      return "03 FEB";
+      return "3 FEB";
     } else if (value == 3) {
-      return "04 FEB";
+      return "4 FEB";
     } else if (value == 4) {
-      return "05 FEB";
+      return "5 FEB";
     } else if (value == 5) {
-      return "06 FEB";
+      return "6 FEB";
     } else if (value == 6) {
-      return "07 FEB";
+      return "7 FEB";
     } else {
       return '';
     }
@@ -124,13 +122,13 @@ class SimpleLineChart extends StatelessWidget {
       LinearWeights(4, 5),
     ];
     var shadowColor = charts.Color(r: 240, g: 246, b: 244, a: 160);
-    var yellowThemeColor = charts.Color.fromHex(code: "#f4e400");
+    var primaryThemeColor = charts.Color.fromHex(code: "#00695C");
     return [
       new charts.Series<LinearWeights, int>(
         id: 'Weights',
         domainFn: (LinearWeights weights, _) => weights.date,
         measureFn: (LinearWeights weights, _) => weights.weight,
-        colorFn: (_, __) => yellowThemeColor,
+        colorFn: (_, __) => primaryThemeColor,
         areaColorFn: (_, __) => shadowColor,
         data: data,
       )
