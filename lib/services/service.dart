@@ -38,7 +38,6 @@ class AppService with ChangeNotifier {
     if (latestBmis.isEmpty) {
       return null;
     }
-    print(latestBmis);
     if (latestBmis.length == 1) {
       final myMap = latestBmis[0];
       Map<String, Object?> map = Map<String, Object?>.from(myMap);
@@ -154,5 +153,9 @@ class AppService with ChangeNotifier {
 
   Future<void> getThisMonthWeights()async{
     await _databaseService.getThisMonthWeights();
+  }
+
+  Future<void> getMinMaxWeight()async{
+    await _databaseService.getMinMaxWeight();
   }
 }

@@ -219,4 +219,21 @@ class DBSingleton {
     return await db.rawQuery('$baseMeasurementQuery $query',[month,year,'1']);
   }
 
+
+  Future getMinMaxWeight()async{
+    final db=await database;
+    final DateTime now = DateTime.now();
+    final String year=DateFormat('yyyy').format(now);
+    final String month=DateFormat('MM').format(now);
+    const String maxQuery="SELECT MAX(value) from measurements WHERE strftime('%m', created_at) = ? AND strftime('%Y', created_at) = ? AND measurement_type_id = ?";
+    const String minQuery="SELECT MIN(value) from measurements WHERE strftime('%m', created_at) = ? AND strftime('%Y', created_at) = ? AND measurement_type_id = ?";
+    const String subQuery="WHERE M.value IN (($maxQuery),($minQuery)) ORDER by M.value DESC";
+    return await db.rawQuery('$baseMeasurementQuery $subQuery',[month,year,1,month,year,1]);
+  }
+
+
+  //
+  // select * from measurements where value in
+  // ((select MAX(value) from measurements WHERE strftime('%m', created_at) = '02' AND strftime('%Y', created_at) = '2022'),(select MIN(value) from measurements WHERE strftime('%m', created_at) = '02' AND strftime('%Y', created_at) = '2022'))
+
 }
