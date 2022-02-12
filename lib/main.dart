@@ -5,6 +5,7 @@ import 'theme/custom_theme.dart';
 import 'package:flutter/widgets.dart';
 import 'services/service.dart';
 import 'package:provider/provider.dart';
+import 'views/stats_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         title: 'Andromeda',
         theme: CustomTheme.lightTheme,
         routes: {
-          '/': (context) => HomePage(),
+          '/': (context) => StatsPage(),
           HomePage.route: (context) => HomePage(),
           MeasurementInputPage.route: (context) => MeasurementInputPage(),
         },

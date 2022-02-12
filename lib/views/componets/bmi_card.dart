@@ -77,9 +77,6 @@ class BmiCard extends StatelessWidget {
 
   BmiRef? findBmiRef(num? value) {
     if (value != null) {
-      // return _bmiRefs
-      //     .where((BmiRef el) => value >= el.range[0] && value <= el.range[1])
-      //     .toList()[0];
       for (var e in _bmiRefs){
         if (e.range[0] == 1) {
           if(value<e.range[1]){
