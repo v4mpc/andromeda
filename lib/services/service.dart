@@ -151,8 +151,15 @@ class AppService with ChangeNotifier {
     return weight / (height * height * 0.01 * 0.01);
   }
 
-  Future<void> getThisMonthWeights() async {
-    await _databaseService.getThisMonthWeights();
+  Future<List<Measurement>> getThisMonthWeights() async {
+    final weights =await _databaseService.getThisMonthWeights();
+    final data = List.generate(weights.length, (i) {
+      Map<String, Object?> map = Map<String, Object?>.from(weights[i]);
+      map['mobility'] = 0;
+      return Measurement.fromMap(map);
+    });
+    print(data);
+    return data;
   }
 
   Future<List<Measurement>> getMinMaxWeight() async {
@@ -164,6 +171,6 @@ class AppService with ChangeNotifier {
     });
 
     return data;
-    // return
+
   }
 }

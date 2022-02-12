@@ -1,17 +1,15 @@
-import 'package:andromeda/models/all_models.dart';
 import 'package:andromeda/services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../views/componets/all_componets.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
-
+import 'package:andromeda/models/all_models.dart';
 
 class StatsPage extends StatelessWidget {
   const StatsPage({Key? key}) : super(key: key);
 
-
-  String _formatDate(String stringDate){
+  String _formatDate(String stringDate) {
     final inputFormat = DateFormat('yyyy-MM-dd');
     final inputDate = inputFormat.parse(stringDate);
     final outputFormat = DateFormat('d MMM');
@@ -21,6 +19,7 @@ class StatsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text('Statistics'),
@@ -41,7 +40,20 @@ class StatsPage extends StatelessWidget {
             ),
             Expanded(
               flex: 6,
-              child: SimpleLineChart.withSampleData(),
+              child: FutureBuilder(
+                  future:
+                      Provider.of<AppService>(context).getThisMonthWeights(),
+                  builder:
+                      (context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      // print(snapshot.data);
+                      return SimpleLineChart(
+                        measurements: snapshot.data,
+                      );
+                    } else {
+                      return const Text('Loading...');
+                    }
+                  }),
             ),
             SizedBox(
               height: 25,
@@ -49,10 +61,8 @@ class StatsPage extends StatelessWidget {
             Expanded(
               child: FutureBuilder(
                   future: Provider.of<AppService>(context).getMinMaxWeight(),
-                  builder:
-                      (context, AsyncSnapshot<dynamic> snapshot) {
-                    print('building');
-                    if (snapshot.connectionState==ConnectionState.done) {
+                  builder: (context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -75,7 +85,7 @@ class StatsPage extends StatelessWidget {
                     } else {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           MinMaxContainer(
                               title: 'Maximum',
                               value: null,
@@ -102,37 +112,53 @@ class StatsPage extends StatelessWidget {
 }
 
 class SimpleLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, int>> seriesList;
   final bool animate;
+  List<Measurement> measurements;
 
-  SimpleLineChart(this.seriesList, {this.animate = false});
+  SimpleLineChart({required this.measurements, this.animate = false});
 
-  factory SimpleLineChart.withSampleData() {
-    return new SimpleLineChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
+  String _formatDate(String stringDate) {
+    final inputFormat = DateFormat('yyyy-MM-dd');
+    final inputDate = inputFormat.parse(stringDate);
+    final outputFormat = DateFormat('d MMM');
+    return outputFormat.format(inputDate);
   }
 
   String xAxisTickFormatter(num? value) {
-    if (value == 0) {
-      return "1 FEB";
-    } else if (value == 1) {
-      return "2 FEB";
-    } else if (value == 2) {
-      return "3 FEB";
-    } else if (value == 3) {
-      return "4 FEB";
-    } else if (value == 4) {
-      return "5 FEB";
-    } else if (value == 5) {
-      return "6 FEB";
-    } else if (value == 6) {
-      return "7 FEB";
+    Map<int, String> labelRouter = {};
+    for (var m in measurements) {
+      int dayDigit = _getDayDigit(m.date);
+      labelRouter[dayDigit] = _formatDate(m.date);
+    }
+    print(labelRouter);
+    if (labelRouter.containsKey(value?.toInt())) {
+      return labelRouter[value?.toInt()] ?? '';
     } else {
       return '';
     }
+  }
+
+  List<LinearWeights> generateChartData() {
+    return List.generate(measurements.length, (index) {
+      return LinearWeights(
+        _getDayDigit(measurements[index].date),
+        measurements[index].value.toInt(),
+      );
+    });
+  }
+
+  int _getMonthDigit(String stringDate) {
+    final inputFormat = DateFormat('yyyy-MM-dd');
+    final inputDate = inputFormat.parse(stringDate);
+    final outputFormat = DateFormat('M');
+    return int.parse(outputFormat.format(inputDate));
+  }
+
+  int _getDayDigit(String stringDate) {
+    final inputFormat = DateFormat('yyyy-MM-dd');
+    final inputDate = inputFormat.parse(stringDate);
+    final outputFormat = DateFormat('d');
+    return int.parse(outputFormat.format(inputDate));
   }
 
   @override
@@ -141,7 +167,7 @@ class SimpleLineChart extends StatelessWidget {
         charts.BasicNumericTickFormatterSpec(xAxisTickFormatter);
 
     return charts.LineChart(
-      seriesList,
+      _createSampleData(generateChartData()),
       animate: animate,
       defaultRenderer:
           charts.LineRendererConfig(includePoints: true, includeArea: true),
@@ -160,14 +186,8 @@ class SimpleLineChart extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearWeights, int>> _createSampleData() {
-    final data = [
-      LinearWeights(0, 12),
-      LinearWeights(1, 1),
-      LinearWeights(2, 4),
-      LinearWeights(3, 7),
-      LinearWeights(4, 5),
-    ];
+  static List<charts.Series<LinearWeights, int>> _createSampleData(
+      List<LinearWeights> data) {
     var shadowColor = charts.Color(r: 240, g: 246, b: 244, a: 160);
     var primaryThemeColor = charts.Color.fromHex(code: "#00695C");
     return [
