@@ -92,10 +92,10 @@ class AppService with ChangeNotifier {
     return await getLatestWeight();
   }
 
-  Future<void> saveWeight(Measurement measurement) async {
-    // todo:: Continue from here
-    await _databaseService.insertMeasurement(measurement.toMap());
-  }
+  // Future<void> saveWeight(Measurement measurement) async {
+  //   // todo:: Continue from here
+  //   await _databaseService.insertMeasurement(measurement.toMap());
+  // }
 
   Future<List<MeasurementType>> getAllWeightUnits() async {
     final List weights = await _databaseService.getWeightUnits();
@@ -112,13 +112,14 @@ class AppService with ChangeNotifier {
   }
 
   Future<void> saveMeasurements(List<FormData> measurements) async {
+    List<FormData> _allMeasurements = measurements;
     if (measurements.length == 2) {
       final double _weight = measurements[0].value;
       final double _height = measurements[1].value;
       final _bmi = _calculateBmi(_height, _weight);
       final FormData data = FormData.fromMap(
           {'date': '2022-2-11', 'typeId': 3, 'unitId': 3, 'value': _bmi});
-      await _databaseService.insertMeasurement(data.toMap());
+      _allMeasurements.add(data);
     } else {
       if (measurements[0].typeId == 1) {
         final HeightMeasurement? _heightMeasurement = await getLatestHeight();
@@ -128,7 +129,7 @@ class AppService with ChangeNotifier {
           final _bmi = _calculateBmi(_height, _weight);
           final FormData data = FormData.fromMap(
               {'date': '2022-2-11', 'typeId': 3, 'unitId': 3, 'value': _bmi});
-          await _databaseService.insertMeasurement(data.toMap());
+          _allMeasurements.add(data);
         }
       } else if (measurements[0].typeId == 2) {
         final WeightMeasurement? _weightMeasurement = await getLatestWeight();
@@ -138,18 +139,16 @@ class AppService with ChangeNotifier {
           final _bmi = _calculateBmi(_height, _weight);
           final FormData data = FormData.fromMap(
               {'date': '2022-2-11', 'typeId': 3, 'unitId': 3, 'value': _bmi});
-          await _databaseService.insertMeasurement(data.toMap());
+          _allMeasurements.add(data);
         }
       }
     }
 
-    for (var m in measurements) {
-      await _databaseService.insertMeasurement(m.toMap());
-    }
+    await _databaseService.insertMeasurement(measurements);
     notifyListeners();
   }
 
   double _calculateBmi(double height, double weight) {
-    return weight / (height * height * 0.01*0.01);
+    return weight / (height * height * 0.01 * 0.01);
   }
 }

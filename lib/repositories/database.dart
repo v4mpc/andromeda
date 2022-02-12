@@ -1,6 +1,7 @@
 import 'repository.dart';
 
 import 'dart:async';
+import '../models/all_models.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -69,7 +70,6 @@ class DBSingleton {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
-
     await db.insert(
       'units',
       {'id': 3, 'name': 'Bmi'},
@@ -129,7 +129,6 @@ class DBSingleton {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
-
     await db.insert(
       'measurements',
       {
@@ -141,7 +140,6 @@ class DBSingleton {
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-
 
     await db.insert(
       'measurements',
@@ -155,7 +153,6 @@ class DBSingleton {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
-
     await db.insert(
       'measurements',
       {
@@ -167,9 +164,6 @@ class DBSingleton {
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-
-
-
   }
 
   Future measurements(query) async {
@@ -195,14 +189,16 @@ class DBSingleton {
     return measurements('$baseMeasurementQuery $query');
   }
 
-  Future<void> insertMeasurement(data) async {
+  Future<void> insertMeasurement(List<FormData> measurements) async {
     final db = await database;
-    await db.insert(
-      'measurements',
-      data,
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-
+    Batch batch = db.batch();
+    for (var m in measurements) {
+      batch.rawDelete(
+          'DELETE FROM measurements WHERE measurement_type_id = ? AND unit_id = ? AND created_at = ?',
+          [m.typeId, m.unitId, m.toMap()['created_at']]);
+      batch.insert('measurements', m.toMap());
+    }
+    await batch.commit(noResult: true);
   }
 
   Future getWeightUnits() async {

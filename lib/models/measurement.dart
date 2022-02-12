@@ -1,5 +1,6 @@
 import 'measurement_type.dart';
 import 'measurement_unit.dart';
+import 'package:intl/intl.dart';
 
 class Measurement {
   int id;
@@ -101,7 +102,7 @@ class FormData{
       'measurement_type_id': typeId,
       'unit_id': unitId,
       'value': double.parse((value).toStringAsFixed(1)),
-      'created_at': date
+      'created_at': DateFormat("yyyy-MM-dd").format(DateTime.now())
     };
   }
 }
