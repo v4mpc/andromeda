@@ -100,7 +100,7 @@ class FormData{
     return {
       'measurement_type_id': typeId,
       'unit_id': unitId,
-      'value': value,
+      'value': double.parse((value).toStringAsFixed(1)),
       'created_at': date
     };
   }

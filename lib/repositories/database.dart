@@ -197,7 +197,6 @@ class DBSingleton {
 
   Future<void> insertMeasurement(data) async {
     final db = await database;
-    print(data);
     await db.insert(
       'measurements',
       data,

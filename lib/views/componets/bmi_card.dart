@@ -55,7 +55,7 @@ class BmiCard extends StatelessWidget {
               } else if (e.range[1] == 100) {
                 _subs = 'Greater than than ${e.range[0]}';
               } else {
-                _subs = '${e.range[0]} to ${e.range[0]}';
+                _subs = '${e.range[0]} to ${e.range[1]}';
               }
               return Column(
                 children: [
@@ -77,9 +77,24 @@ class BmiCard extends StatelessWidget {
 
   BmiRef? findBmiRef(num? value) {
     if (value != null) {
-      return _bmiRefs
-          .where((BmiRef el) => value >= el.range[0] && value <= el.range[1])
-          .toList()[0];
+      // return _bmiRefs
+      //     .where((BmiRef el) => value >= el.range[0] && value <= el.range[1])
+      //     .toList()[0];
+      for (var e in _bmiRefs){
+        if (e.range[0] == 1) {
+          if(value<e.range[1]){
+            return e;
+          }
+        } else if (e.range[0] == 100) {
+          if(value>e.range[1]){
+            return e;
+          }
+        } else {
+          if(value>=e.range[0]&&value<=e.range[1]){
+            return e;
+          }
+        }
+      }
     }
     return null;
   }

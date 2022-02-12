@@ -2,7 +2,7 @@ import '../repositories/database.dart';
 import '../models/all_models.dart';
 import 'package:flutter/foundation.dart';
 
-class AppService with ChangeNotifier{
+class AppService with ChangeNotifier {
   final DBSingleton _databaseService = DBSingleton();
 
   Future<HeightMeasurement?> getLatestHeight() async {
@@ -10,7 +10,7 @@ class AppService with ChangeNotifier{
     if (latestHeights.isEmpty) {
       return null;
     }
-    print(latestHeights);
+
     if (latestHeights.length == 1) {
       final myMap = latestHeights[0];
       Map<String, Object?> map = Map<String, Object?>.from(myMap);
@@ -38,6 +38,7 @@ class AppService with ChangeNotifier{
     if (latestBmis.isEmpty) {
       return null;
     }
+    print(latestBmis);
     if (latestBmis.length == 1) {
       final myMap = latestBmis[0];
       Map<String, Object?> map = Map<String, Object?>.from(myMap);
@@ -59,7 +60,6 @@ class AppService with ChangeNotifier{
       throw Exception('More than two rows where returned');
     }
   }
-
 
   Future<WeightMeasurement?> getLatestWeight() async {
     final List latestWeights = await _databaseService.getLatestWeight();
@@ -88,11 +88,9 @@ class AppService with ChangeNotifier{
     }
   }
 
-  Future<Measurement?> get measurement async{
+  Future<Measurement?> get measurement async {
     return await getLatestWeight();
   }
-
-
 
   Future<void> saveWeight(Measurement measurement) async {
     // todo:: Continue from here
@@ -106,7 +104,6 @@ class AppService with ChangeNotifier{
     });
   }
 
-
   Future<List<MeasurementType>> getAllHeightUnits() async {
     final List heights = await _databaseService.getHeightUnits();
     return List.generate(heights.length, (i) {
@@ -114,19 +111,45 @@ class AppService with ChangeNotifier{
     });
   }
 
-  Future<void> saveMeasurements(List<FormData> measurements) async{
-    for(var m in measurements){
+  Future<void> saveMeasurements(List<FormData> measurements) async {
+    if (measurements.length == 2) {
+      final double _weight = measurements[0].value;
+      final double _height = measurements[1].value;
+      final _bmi = _calculateBmi(_height, _weight);
+      final FormData data = FormData.fromMap(
+          {'date': '2022-2-11', 'typeId': 3, 'unitId': 3, 'value': _bmi});
+      await _databaseService.insertMeasurement(data.toMap());
+    } else {
+      if (measurements[0].typeId == 1) {
+        final HeightMeasurement? _heightMeasurement = await getLatestHeight();
+        if (_heightMeasurement != null) {
+          final double _weight = measurements[0].value;
+          final double _height = _heightMeasurement.value.toDouble();
+          final _bmi = _calculateBmi(_height, _weight);
+          final FormData data = FormData.fromMap(
+              {'date': '2022-2-11', 'typeId': 3, 'unitId': 3, 'value': _bmi});
+          await _databaseService.insertMeasurement(data.toMap());
+        }
+      } else if (measurements[0].typeId == 2) {
+        final WeightMeasurement? _weightMeasurement = await getLatestWeight();
+        if (_weightMeasurement != null) {
+          final double _weight = _weightMeasurement.value.toDouble();
+          final double _height = measurements[0].value;
+          final _bmi = _calculateBmi(_height, _weight);
+          final FormData data = FormData.fromMap(
+              {'date': '2022-2-11', 'typeId': 3, 'unitId': 3, 'value': _bmi});
+          await _databaseService.insertMeasurement(data.toMap());
+        }
+      }
+    }
+
+    for (var m in measurements) {
       await _databaseService.insertMeasurement(m.toMap());
     }
     notifyListeners();
   }
 
-  void saveList(List<FormData> measurements){
-    saveMeasurements(measurements);
-    // print('Save list Called');
-    notifyListeners();
+  double _calculateBmi(double height, double weight) {
+    return weight / (height * height * 0.01*0.01);
   }
-
-
-
 }
