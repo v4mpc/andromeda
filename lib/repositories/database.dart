@@ -230,10 +230,4 @@ class DBSingleton {
     const String subQuery="WHERE M.value IN (($maxQuery),($minQuery)) ORDER by M.value DESC";
     return await db.rawQuery('$baseMeasurementQuery $subQuery',[month,year,1,month,year,1]);
   }
-
-
-  //
-  // select * from measurements where value in
-  // ((select MAX(value) from measurements WHERE strftime('%m', created_at) = '02' AND strftime('%Y', created_at) = '2022'),(select MIN(value) from measurements WHERE strftime('%m', created_at) = '02' AND strftime('%Y', created_at) = '2022'))
-
 }

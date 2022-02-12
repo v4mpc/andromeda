@@ -31,7 +31,7 @@ class StatsPage extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Text(
-                'February 2022 Weights',
+                'This Month Weights',
                 style: Theme.of(context)
                     .textTheme
                     .headline6!
