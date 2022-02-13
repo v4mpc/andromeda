@@ -152,14 +152,12 @@ class AppService with ChangeNotifier {
   }
 
   Future<List<Measurement>> getThisMonthWeights() async {
-    final weights =await _databaseService.getThisMonthWeights();
+    final weights = await _databaseService.getThisMonthWeights();
     final data = List.generate(weights.length, (i) {
       Map<String, Object?> map = Map<String, Object?>.from(weights[i]);
       map['mobility'] = 0;
       return Measurement.fromMap(map);
     });
-
-
 
     return data;
   }
@@ -172,11 +170,18 @@ class AppService with ChangeNotifier {
       return Measurement.fromMap(map);
     });
 
-    if(data.length==1){
+    if (data.length == 1) {
       data.add(data[0]);
     }
     // print(data);
     return data;
+  }
 
+  @override
+  void dispose() async {
+    // TODO: implement dispose
+    final db = await _databaseService.database;
+    await db.close();
+    super.dispose();
   }
 }
