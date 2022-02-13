@@ -43,19 +43,20 @@ class StatsPage extends StatelessWidget {
               child: FutureBuilder(
                   future:
                       Provider.of<AppService>(context).getThisMonthWeights(),
-                  builder:
-                      (context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done && snapshot.data.length>1) {
+                  builder: (context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.data.length > 1) {
                       return SimpleLineChart(
                         measurements: snapshot.data,
                       );
                     } else {
-                      return  Column(children: [
-                        Text('No Data Yet!'),
-                        Text('Only latest reading in a day are recorded.'),
-                        Text('Chart appears with at least two readings.'),
-
-                      ],);
+                      return Column(
+                        children: [
+                          Text('No Data Yet!'),
+                          Text('Only latest reading in a day are recorded.'),
+                          Text('Chart appears with at least two readings.'),
+                        ],
+                      );
                     }
                   }),
             ),
@@ -66,7 +67,8 @@ class StatsPage extends StatelessWidget {
               child: FutureBuilder(
                   future: Provider.of<AppService>(context).getMinMaxWeight(),
                   builder: (context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done && snapshot.data.length>0) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.data.length > 0) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -118,28 +120,25 @@ class StatsPage extends StatelessWidget {
 class SimpleLineChart extends StatelessWidget {
   final bool animate;
   List<Measurement> measurements;
-  Map _labelRouter={};
+  Map _labelRouter = {};
 
-  SimpleLineChart({required this.measurements, this.animate = false}){
-    _labelRouter=generateLabelRouter();
+  SimpleLineChart({required this.measurements, this.animate = false}) {
+    _labelRouter = generateLabelRouter();
   }
 
-
-
-  Map generateLabelRouter(){
+  Map generateLabelRouter() {
     Map<int, String> labelRouter = {};
 
-    for( int i = 1 ; i <= 31; i++ ){
-
+    for (int i = 1; i <= 31; i++) {
       labelRouter[i] = '$i ${_getMonthName(measurements[0].date)}';
     }
 
     return labelRouter;
   }
-  String xAxisTickFormatter(num? value) {
 
+  String xAxisTickFormatter(num? value) {
     if (_labelRouter.containsKey(value?.toInt())) {
-      return _labelRouter[value?.toInt()]??'';
+      return _labelRouter[value?.toInt()] ?? '';
     } else {
       return '';
     }
@@ -176,17 +175,34 @@ class SimpleLineChart extends StatelessWidget {
     return charts.LineChart(
       _createSampleData(generateChartData()),
       animate: animate,
-      defaultRenderer:
-          charts.LineRendererConfig(includePoints: true, includeArea: false),
+      defaultRenderer: charts.LineRendererConfig(
+        includePoints: true,
+        includeArea: false,
+      ),
       primaryMeasureAxis: charts.NumericAxisSpec(
+        // showAxisLine:fals
+        renderSpec: charts.GridlineRendererSpec(
+          labelStyle: charts.TextStyleSpec(
+            color: (MediaQuery.of(context).platformBrightness==Brightness.dark)?charts.Color.white:charts.Color.black,
+          ),
+        ),
         showAxisLine: true,
-        tickProviderSpec: charts.BasicNumericTickProviderSpec(
-            desiredTickCount: 6, zeroBound: false),
+        tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+          desiredTickCount: 6,
+          zeroBound: false,
+        ),
       ),
       domainAxis: charts.NumericAxisSpec(
+        renderSpec: charts.SmallTickRendererSpec(
+          labelStyle: charts.TextStyleSpec(
+            color: (MediaQuery.of(context).platformBrightness==Brightness.dark)?charts.Color.white:charts.Color.black,
+          ),
+        ),
         showAxisLine: true,
-        tickProviderSpec: charts.BasicNumericTickProviderSpec(
-            desiredTickCount: 3, zeroBound: false),
+        tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+          desiredTickCount: 3,
+          zeroBound: false,
+        ),
         tickFormatterSpec: customTickFormatter,
       ),
     );
@@ -195,10 +211,10 @@ class SimpleLineChart extends StatelessWidget {
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearWeights, int>> _createSampleData(
       List<LinearWeights> data) {
-    var shadowColor = charts.Color(r: 240, g: 246, b: 244, a: 160);
+    var shadowColor = const charts.Color(r: 240, g: 246, b: 244, a: 160);
     var primaryThemeColor = charts.Color.fromHex(code: "#00695C");
     return [
-      new charts.Series<LinearWeights, int>(
+      charts.Series<LinearWeights, int>(
         id: 'Weights',
         domainFn: (LinearWeights weights, _) => weights.date,
         measureFn: (LinearWeights weights, _) => weights.weight,
