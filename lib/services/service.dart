@@ -158,6 +158,9 @@ class AppService with ChangeNotifier {
       map['mobility'] = 0;
       return Measurement.fromMap(map);
     });
+
+
+
     return data;
   }
 
@@ -169,6 +172,10 @@ class AppService with ChangeNotifier {
       return Measurement.fromMap(map);
     });
 
+    if(data.length==1){
+      data.add(data[0]);
+    }
+    // print(data);
     return data;
 
   }

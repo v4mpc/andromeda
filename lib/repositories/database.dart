@@ -65,45 +65,45 @@ class DBSingleton {
       await txn.insert('measurement_types', {'id': 1, 'name': 'WEIGHT'});
       await txn.insert('measurement_types', {'id': 2, 'name': 'HEIGHT'});
       await txn.insert('measurement_types', {'id': 3, 'name': 'BMI'});
-      await txn.insert('measurements', {
-        'id': 1,
-        'measurement_type_id': 1,
-        'unit_id': 1,
-        'value': 80,
-        'created_at': '2022-01-2'
-      });
+      // await txn.insert('measurements', {
+      //   'id': 1,
+      //   'measurement_type_id': 1,
+      //   'unit_id': 1,
+      //   'value': 80,
+      //   'created_at': '2022-01-02'
+      // });
 
-      await txn.insert('measurements', {
-        'id': 2,
-        'measurement_type_id': 1,
-        'unit_id': 1,
-        'value': 70,
-        'created_at': '2022-02-03'
-      });
+      // await txn.insert('measurements', {
+      //   'id': 2,
+      //   'measurement_type_id': 1,
+      //   'unit_id': 1,
+      //   'value': 70,
+      //   'created_at': '2022-02-03'
+      // });
 
-      await txn.insert('measurements', {
-        'id': 3,
-        'measurement_type_id': 1,
-        'unit_id': 1,
-        'value': 89.1,
-        'created_at': '2022-02-05'
-      });
+      // await txn.insert('measurements', {
+      //   'id': 3,
+      //   'measurement_type_id': 1,
+      //   'unit_id': 1,
+      //   'value': 89.1,
+      //   'created_at': '2022-02-05'
+      // });
 
-      await txn.insert('measurements', {
-        'id': 4,
-        'measurement_type_id': 2,
-        'unit_id': 2,
-        'value': 170.2,
-        'created_at': '2022-02-16'
-      });
+      // await txn.insert('measurements', {
+      //   'id': 4,
+      //   'measurement_type_id': 2,
+      //   'unit_id': 2,
+      //   'value': 170.2,
+      //   'created_at': '2022-02-16'
+      // });
 
-      await txn.insert('measurements', {
-        'id': 5,
-        'measurement_type_id': 3,
-        'unit_id': 3,
-        'value': 2,
-        'created_at': '2022-02-23'
-      });
+      // await txn.insert('measurements', {
+      //   'id': 5,
+      //   'measurement_type_id': 3,
+      //   'unit_id': 3,
+      //   'value': 2,
+      //   'created_at': '2022-02-23'
+      // });
     });
   }
 

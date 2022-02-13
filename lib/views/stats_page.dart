@@ -45,12 +45,12 @@ class StatsPage extends StatelessWidget {
                       Provider.of<AppService>(context).getThisMonthWeights(),
                   builder:
                       (context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.connectionState == ConnectionState.done && snapshot.data.length>1) {
                       return SimpleLineChart(
                         measurements: snapshot.data,
                       );
                     } else {
-                      return const Text('Loading...');
+                      return const Text('No Data Yet, Data Will show with atleast two readings.');
                     }
                   }),
             ),
@@ -61,7 +61,7 @@ class StatsPage extends StatelessWidget {
               child: FutureBuilder(
                   future: Provider.of<AppService>(context).getMinMaxWeight(),
                   builder: (context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.connectionState == ConnectionState.done && snapshot.data.length>0) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
