@@ -1,11 +1,21 @@
 import 'package:andromeda/models/all_models.dart';
 import 'package:flutter/material.dart';
 import 'mobility_indicator.dart';
+import 'package:intl/intl.dart';
+
 
 class MetricsContainer extends StatelessWidget {
   final Measurement? measurement;
 
   const MetricsContainer({Key? key, this.measurement}) : super(key: key);
+
+
+  String _formatDate(String stringDate) {
+    final inputFormat = DateFormat('yyyy-MM-dd');
+    final inputDate = inputFormat.parse(stringDate);
+    final outputFormat = DateFormat('d MMM yy');
+    return outputFormat.format(inputDate);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +42,7 @@ class MetricsContainer extends StatelessWidget {
                 number: measurement?.mobility.toDouble() ?? 0),
           ),
         Text(
-          measurement?.date ?? '-',
+          measurement!=null?_formatDate(measurement!.date):'-',
           style: TextStyle(color: Theme.of(context).textTheme.caption!.color),
         )
       ],

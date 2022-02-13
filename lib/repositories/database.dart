@@ -34,9 +34,9 @@ class DBSingleton {
 
   Future<Database> _init() async {
     final dbPath = join(await getDatabasesPath(), _dbName);
-    if (await databaseExists(dbPath)) {
-      await deleteDatabase(dbPath);
-    }
+    // if (await databaseExists(dbPath)) {
+    //   await deleteDatabase(dbPath);
+    // }
 
     return await openDatabase(dbPath,
         version: _dbVersion, onCreate: _onCreate, onConfigure: _onConfigure);

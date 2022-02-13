@@ -3,7 +3,6 @@ import 'package:andromeda/services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class MeasurementInputPage extends StatelessWidget {
   static const route = '/inputpage';
   final _weightController = TextEditingController();
@@ -12,7 +11,7 @@ class MeasurementInputPage extends StatelessWidget {
 
   MeasurementInputPage({Key? key}) : super(key: key);
 
-  String? _inputValidator(String? value,int maxNumber) {
+  String? _inputValidator(String? value, int maxNumber) {
     final RegExp regex = RegExp(r'^[0-9][0-9.]*$');
     if (value != null && !regex.hasMatch(value)) {
       return 'Only positive digits allowed';
@@ -25,14 +24,18 @@ class MeasurementInputPage extends StatelessWidget {
     return null;
   }
 
-  String? _validateWeight(String? value, int maxNumber){
-    if(_heightController.text.isEmpty ||(_heightController.text.isNotEmpty&&_weightController.text.isNotEmpty)){
+  String? _validateWeight(String? value, int maxNumber) {
+    if (_heightController.text.isEmpty ||
+        (_heightController.text.isNotEmpty &&
+            _weightController.text.isNotEmpty)) {
       return _inputValidator(value, maxNumber);
     }
   }
 
-  String? _validateHeight(String? value, int maxNumber){
-    if(_weightController.text.isEmpty ||(_weightController.text.isNotEmpty&&_heightController.text.isNotEmpty)){
+  String? _validateHeight(String? value, int maxNumber) {
+    if (_weightController.text.isEmpty ||
+        (_weightController.text.isNotEmpty &&
+            _heightController.text.isNotEmpty)) {
       return _inputValidator(value, maxNumber);
     }
   }
@@ -51,12 +54,12 @@ class MeasurementInputPage extends StatelessWidget {
             padding: EdgeInsets.all(13.0),
             child: Column(
               children: [
-                Text('* You can fill one or both fields.',style: TextStyle(
-                  fontStyle: FontStyle.italic
-                ),),
+                Text(
+                  '* You can fill one or both fields.',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
                 Row(
                   children: [
-
                     Expanded(
                       flex: 5,
                       child: TextFormField(
@@ -67,7 +70,8 @@ class MeasurementInputPage extends StatelessWidget {
                           icon: Icon(Icons.monitor_weight_outlined),
                           labelText: 'Weight (Kg)',
                         ),
-                        validator: (String? value) => _validateWeight(value,1000),
+                        validator: (String? value) =>
+                            _validateWeight(value, 1000),
                       ),
                     ),
                     SizedBox(
@@ -107,7 +111,8 @@ class MeasurementInputPage extends StatelessWidget {
                           icon: Icon(Icons.straighten),
                           labelText: 'Height (Cm)',
                         ),
-                        validator: (String? value) => _validateHeight(value,500),
+                        validator: (String? value) =>
+                            _validateHeight(value, 500),
                       ),
                     ),
                     SizedBox(
@@ -155,10 +160,9 @@ class MeasurementInputPage extends StatelessWidget {
                     SizedBox(
                       width: 20,
                     ),
-
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: ()async{
+                        onPressed: () async {
                           final form = _formKey.currentState;
                           if (!form!.validate()) {
                             print('invalid form');
@@ -187,8 +191,10 @@ class MeasurementInputPage extends StatelessWidget {
                               }),
                             );
                           }
+                          // clear validators on input
 
-                          await Provider.of<AppService>(context,listen: false).saveMeasurements(formData);
+                          await Provider.of<AppService>(context, listen: false)
+                              .saveMeasurements(formData);
                           Navigator.of(context).pop();
                         },
                         style: ElevatedButton.styleFrom(

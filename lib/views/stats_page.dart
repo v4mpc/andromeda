@@ -50,7 +50,11 @@ class StatsPage extends StatelessWidget {
                         measurements: snapshot.data,
                       );
                     } else {
-                      return const Text('No Data Yet, Data Will show with atleast two readings.');
+                      return  Column(children: [
+                        Text('No Data Yet!'),
+                        Text('Data Will show with at least two readings.'),
+                        Text('Only latest reading of a day are recorded.'),
+                      ],);
                     }
                   }),
             ),
@@ -119,12 +123,7 @@ class SimpleLineChart extends StatelessWidget {
     _labelRouter=generateLabelRouter();
   }
 
-  String _formatDate(String stringDate) {
-    final inputFormat = DateFormat('yyyy-MM-dd');
-    final inputDate = inputFormat.parse(stringDate);
-    final outputFormat = DateFormat('d MMM');
-    return outputFormat.format(inputDate);
-  }
+
 
   Map generateLabelRouter(){
     Map<int, String> labelRouter = {};
