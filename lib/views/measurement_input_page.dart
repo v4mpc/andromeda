@@ -12,17 +12,29 @@ class MeasurementInputPage extends StatelessWidget {
 
   MeasurementInputPage({Key? key}) : super(key: key);
 
-  String? _inputValidator(String? value) {
+  String? _inputValidator(String? value,int maxNumber) {
     final RegExp regex = RegExp(r'^[0-9][0-9.]*$');
     if (value != null && !regex.hasMatch(value)) {
-      return 'Only digits allowed';
+      return 'Only positive digits allowed';
     }
 
     final double dValue = double.parse(value ?? '0');
-    if (value != null && (dValue > 10000 || dValue < 1)) {
-      return 'Allowed 1-10000';
+    if (value != null && (dValue > maxNumber || dValue < 1)) {
+      return 'Allowed 1-$maxNumber';
     }
     return null;
+  }
+
+  String? _validateWeight(String? value, int maxNumber){
+    if(_heightController.text.isEmpty ||(_heightController.text.isNotEmpty&&_weightController.text.isNotEmpty)){
+      return _inputValidator(value, maxNumber);
+    }
+  }
+
+  String? _validateHeight(String? value, int maxNumber){
+    if(_weightController.text.isEmpty ||(_weightController.text.isNotEmpty&&_heightController.text.isNotEmpty)){
+      return _inputValidator(value, maxNumber);
+    }
   }
 
   @override
@@ -39,19 +51,23 @@ class MeasurementInputPage extends StatelessWidget {
             padding: EdgeInsets.all(13.0),
             child: Column(
               children: [
+                Text('* You can fill one or both fields.',style: TextStyle(
+                  fontStyle: FontStyle.italic
+                ),),
                 Row(
                   children: [
+
                     Expanded(
                       flex: 5,
                       child: TextFormField(
                         controller: _weightController,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        // autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           icon: Icon(Icons.monitor_weight_outlined),
                           labelText: 'Weight (Kg)',
                         ),
-                        validator: (String? value) => _inputValidator(value),
+                        validator: (String? value) => _validateWeight(value,1000),
                       ),
                     ),
                     SizedBox(
@@ -86,12 +102,12 @@ class MeasurementInputPage extends StatelessWidget {
                       child: TextFormField(
                         controller: _heightController,
                         keyboardType: TextInputType.number,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        // autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: const InputDecoration(
                           icon: Icon(Icons.straighten),
                           labelText: 'Height (Cm)',
                         ),
-                        validator: (String? value) => _inputValidator(value),
+                        validator: (String? value) => _validateHeight(value,500),
                       ),
                     ),
                     SizedBox(
@@ -139,13 +155,16 @@ class MeasurementInputPage extends StatelessWidget {
                     SizedBox(
                       width: 20,
                     ),
+
                     Expanded(
                       child: ElevatedButton(
                         onPressed: ()async{
-                          // final form = _formKey.currentState;
-                          // if (!form!.validate()) {
-                          //   return;
-                          // }
+                          final form = _formKey.currentState;
+                          if (!form!.validate()) {
+                            print('invalid form');
+                            return;
+                          }
+
                           List<FormData> formData = [];
                           if (_weightController.text.isNotEmpty) {
                             formData.add(
