@@ -37,7 +37,6 @@ class _MainPageState extends State<MainPage> {
           onTap: _onItemTapped,
           selectedItemColor: Theme.of(context).primaryColor,
           items: const <BottomNavigationBarItem>[
-
             BottomNavigationBarItem(
               icon: Icon(Icons.space_dashboard),
               label: 'Dashboard',
@@ -59,7 +58,7 @@ class _MainPageState extends State<MainPage> {
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation
-          .centerDocked, // This trailing comma makes auto-formatting nicer for build methods.
+          .centerDocked,
     );
   }
 

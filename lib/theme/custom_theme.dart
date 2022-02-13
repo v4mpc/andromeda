@@ -44,6 +44,7 @@ class CustomTheme {
 
   static ThemeData get darkTheme {
     return ThemeData(
+
       brightness: Brightness.dark,
       primaryColor: const Color(0xff00695C),
       colorScheme: ColorScheme.fromSwatch(
@@ -51,7 +52,7 @@ class CustomTheme {
         brightness: Brightness.dark,
       ).copyWith(
         primary: const Color(0xff00695C),
-        brightness: Brightness.dark,
+        onPrimary: Colors.white,
       ),
     );
   }
@@ -64,6 +65,8 @@ class CustomTheme {
         primarySwatch: Colors.orange,
       ).copyWith(
         primary: const Color(0xff00695C),
+        onPrimary: Colors.white,
+
       ),
     );
   }
