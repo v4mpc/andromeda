@@ -52,8 +52,9 @@ class StatsPage extends StatelessWidget {
                     } else {
                       return  Column(children: [
                         Text('No Data Yet!'),
-                        Text('Data Will show with at least two readings.'),
-                        Text('Only latest reading of a day are recorded.'),
+                        Text('Only latest reading in a day are recorded.'),
+                        Text('Chart appears with at least two readings.'),
+
                       ],);
                     }
                   }),
