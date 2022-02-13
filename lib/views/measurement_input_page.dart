@@ -49,7 +49,7 @@ class MeasurementInputPage extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           icon: Icon(Icons.monitor_weight_outlined),
-                          labelText: 'Weight',
+                          labelText: 'Weight (Kg)',
                         ),
                         validator: (String? value) => _inputValidator(value),
                       ),
@@ -57,23 +57,23 @@ class MeasurementInputPage extends StatelessWidget {
                     SizedBox(
                       width: 40,
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: DropdownButtonFormField<String>(
-                        value: 'Kg',
-                        icon: const Icon(Icons.expand_more),
-                        // elevation: 16,
-                        style: const TextStyle(color: Colors.deepPurple),
-                        onChanged: (String? newValue) {},
-                        items: <String>['Kg', 'Ounce']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    )
+                    // Expanded(
+                    //   flex: 2,
+                    //   child: DropdownButtonFormField<String>(
+                    //     value: 'Kg',
+                    //     icon: const Icon(Icons.expand_more),
+                    //     // elevation: 16,
+                    //     style: const TextStyle(color: Colors.deepPurple),
+                    //     onChanged: (String? newValue) {},
+                    //     items: <String>['Kg', 'Ounce']
+                    //         .map<DropdownMenuItem<String>>((String value) {
+                    //       return DropdownMenuItem<String>(
+                    //         value: value,
+                    //         child: Text(value),
+                    //       );
+                    //     }).toList(),
+                    //   ),
+                    // )
                   ],
                 ),
                 SizedBox(
@@ -89,7 +89,7 @@ class MeasurementInputPage extends StatelessWidget {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: const InputDecoration(
                           icon: Icon(Icons.straighten),
-                          labelText: 'Height',
+                          labelText: 'Height (Cm)',
                         ),
                         validator: (String? value) => _inputValidator(value),
                       ),
@@ -97,23 +97,23 @@ class MeasurementInputPage extends StatelessWidget {
                     SizedBox(
                       width: 40,
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: DropdownButtonFormField<String>(
-                        value: 'Cm',
-                        icon: const Icon(Icons.expand_more),
-                        // elevation: 16,
-                        style: const TextStyle(color: Colors.deepPurple),
-                        onChanged: (String? newValue) {},
-                        items: <String>['Cm', 'Ounce']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    )
+                    // Expanded(
+                    //   flex: 2,
+                    //   child: DropdownButtonFormField<String>(
+                    //     value: 'Cm',
+                    //     icon: const Icon(Icons.expand_more),
+                    //     // elevation: 16,
+                    //     style: const TextStyle(color: Colors.deepPurple),
+                    //     onChanged: (String? newValue) {},
+                    //     items: <String>['Cm', 'Ounce']
+                    //         .map<DropdownMenuItem<String>>((String value) {
+                    //       return DropdownMenuItem<String>(
+                    //         value: value,
+                    //         child: Text(value),
+                    //       );
+                    //     }).toList(),
+                    //   ),
+                    // )
                   ],
                 ),
                 SizedBox(
