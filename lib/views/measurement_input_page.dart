@@ -3,13 +3,28 @@ import 'package:andromeda/services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MeasurementInputPage extends StatelessWidget {
+class MeasurementInputPage extends StatefulWidget {
   static const route = '/inputpage';
-  final _weightController = TextEditingController();
-  final _heightController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   MeasurementInputPage({Key? key}) : super(key: key);
+
+  @override
+  State<MeasurementInputPage> createState() => _MeasurementInputPageState();
+}
+
+class _MeasurementInputPageState extends State<MeasurementInputPage> {
+  final _weightController = TextEditingController();
+
+  final _heightController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  void dispose()
+  {
+    _weightController.dispose();
+    _heightController.dispose();
+    super.dispose();
+  }
 
   String? _inputValidator(String? value, int maxNumber) {
     final RegExp regex = RegExp(r'^[0-9][0-9.]*$');
