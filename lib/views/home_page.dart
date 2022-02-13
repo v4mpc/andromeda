@@ -15,6 +15,14 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
     title: Text('Dashboard'),
+          // actions: [
+          //   IconButton(
+          //     onPressed: () {
+          //       showAboutDialog(context: context,applicationName: 'Andromeda',applicationVersion: '1.0.0-alpha',applicationLegalese: 'sdfsdfsdfsdfsdf');
+          //     },
+          //     icon: Icon(Icons.info),
+          //   ),
+          // ],
     ),
     body:Column(
       children: [
