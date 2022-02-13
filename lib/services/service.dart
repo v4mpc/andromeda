@@ -164,7 +164,7 @@ class AppService with ChangeNotifier {
 
   Future<List<Measurement>> getMinMaxWeight() async {
     final weights = await _databaseService.getMinMaxWeight();
-    final data = List.generate(weights.length, (i) {
+    final List<Measurement> data = List.generate(weights.length, (i) {
       Map<String, Object?> map = Map<String, Object?>.from(weights[i]);
       map['mobility'] = 0;
       return Measurement.fromMap(map);
@@ -173,7 +173,8 @@ class AppService with ChangeNotifier {
     if (data.length == 1) {
       data.add(data[0]);
     }
-    // print(data);
+    // assert(data.length > 4,'data.len should be greater than one');
+
     return data;
   }
 

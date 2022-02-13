@@ -163,12 +163,9 @@ class _MeasurementInputPageState extends State<MeasurementInputPage> {
                           // FocusManager.instance.primaryFocus?.unfocus();
                           Navigator.of(context).pop();
                         },
-                        style: ElevatedButton.styleFrom(
-                          primary: Color(0xffE0F2F1),
-                        ),
+
                         child: const Text(
                           'Cancel',
-                          style: TextStyle(color: Colors.black),
                         ),
                       ),
                     ),
@@ -212,8 +209,6 @@ class _MeasurementInputPageState extends State<MeasurementInputPage> {
                               .saveMeasurements(formData);
                           Navigator.of(context).pop();
                         },
-                        style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).primaryColor),
                         child: const Text('Save'),
                       ),
                     ),

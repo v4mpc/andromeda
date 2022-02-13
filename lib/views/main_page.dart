@@ -39,8 +39,8 @@ class _MainPageState extends State<MainPage> {
           items: const <BottomNavigationBarItem>[
 
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
+              icon: Icon(Icons.space_dashboard),
+              label: 'Dashboard',
 
             ),
             BottomNavigationBarItem(

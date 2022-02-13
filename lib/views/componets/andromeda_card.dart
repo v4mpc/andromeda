@@ -16,7 +16,7 @@ class AndromedaCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
       ),
       elevation: 4,
-      color: color,
+      // color: color,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(

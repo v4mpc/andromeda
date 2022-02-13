@@ -27,6 +27,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Andromeda',
         theme: CustomTheme.lightTheme,
+        darkTheme: CustomTheme.darkTheme,
+        themeMode: ThemeMode.system,
         routes: {
           '/': (context) => MainPage(),
           MainPage.route: (context) => MainPage(),

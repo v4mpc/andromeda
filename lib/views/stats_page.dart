@@ -177,7 +177,7 @@ class SimpleLineChart extends StatelessWidget {
       _createSampleData(generateChartData()),
       animate: animate,
       defaultRenderer:
-          charts.LineRendererConfig(includePoints: true, includeArea: true),
+          charts.LineRendererConfig(includePoints: true, includeArea: false),
       primaryMeasureAxis: charts.NumericAxisSpec(
         showAxisLine: true,
         tickProviderSpec: charts.BasicNumericTickProviderSpec(
