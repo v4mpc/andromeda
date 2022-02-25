@@ -59,6 +59,7 @@ class CustomTheme {
 
   static ThemeData get lightTheme {
     return ThemeData(
+      bottomAppBarColor: Colors.green[100],
       brightness: Brightness.light,
       primaryColor: const Color(0xff00695C),
       colorScheme: ColorScheme.fromSwatch(

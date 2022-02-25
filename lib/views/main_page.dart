@@ -3,10 +3,10 @@ import 'package:andromeda/views/measurement_input_page.dart';
 import 'package:flutter/foundation.dart';
 import 'home_page.dart';
 import 'stats_page.dart';
+import 'componets/all_componets.dart';
 
 class MainPage extends StatefulWidget {
   static const route = '/homepage';
-
 
   const MainPage({Key? key}) : super(key: key);
 
@@ -16,38 +16,28 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  final pages=[
-    HomePage(),
-    StatsPage()
-  ];
+  final pages = [HomePage(), StatsPage()];
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: IndexedStack(
         index: _selectedIndex,
         children: pages,
       ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          selectedItemColor: Theme.of(context).primaryColor,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.space_dashboard),
-              label: 'Dashboard',
-
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.insights),
-              label: 'Stats',
-            ),
-          ],
-        ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: [
+          CustomBottomNavigationBarItem(
+            icon: Icon(Icons.dashboard_outlined),
+          ),
+          CustomBottomNavigationBarItem(
+            icon: Icon(Icons.insights),
+          ),
+          // CustomBottomNavigationBarItem(icon: Icons.format_list_bulleted_outlined),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
@@ -57,8 +47,7 @@ class _MainPageState extends State<MainPage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation
-          .centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
