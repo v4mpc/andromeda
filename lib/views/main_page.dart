@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'home_page.dart';
 import 'stats_page.dart';
 import 'componets/all_componets.dart';
+import 'measurement_list_page.dart';
 
 class MainPage extends StatefulWidget {
   static const route = '/homepage';
@@ -16,7 +17,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  final pages = [HomePage(), StatsPage()];
+  final pages = [HomePage(), StatsPage(), MeasurementListPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,9 @@ class _MainPageState extends State<MainPage> {
           CustomBottomNavigationBarItem(
             icon: Icon(Icons.insights),
           ),
-          // CustomBottomNavigationBarItem(icon: Icons.format_list_bulleted_outlined),
+          CustomBottomNavigationBarItem(
+            icon: Icon(Icons.format_list_bulleted),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(

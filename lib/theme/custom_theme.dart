@@ -60,6 +60,10 @@ class CustomTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       bottomAppBarColor: Colors.green[100],
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.all(Color(0xffab02ee)),
+        checkColor: MaterialStateProperty.all(Colors.white),
+      ),
       brightness: Brightness.light,
       primaryColor: const Color(0xff00695C),
       colorScheme: ColorScheme.fromSwatch(

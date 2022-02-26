@@ -4,6 +4,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+
 class DBSingleton {
   static final DBSingleton _dbSingleton = DBSingleton._internal();
 
@@ -66,7 +67,6 @@ class DBSingleton {
       await txn.insert('measurement_types', {'id': 1, 'name': 'WEIGHT'});
       await txn.insert('measurement_types', {'id': 2, 'name': 'HEIGHT'});
       await txn.insert('measurement_types', {'id': 3, 'name': 'BMI'});
-
     });
   }
 
@@ -143,5 +143,10 @@ class DBSingleton {
         "WHERE M.value IN (($maxQuery),($minQuery)) ORDER by M.value DESC";
     return await db.rawQuery(
         '$baseMeasurementQuery $subQuery', [month, year, 1, month, year, 1]);
+  }
+
+  Future getAllMeasurements() async {
+    final db = await database;
+    return await db.rawQuery('$baseMeasurementQuery ORDER By m.id DESC');
   }
 }

@@ -106,3 +106,13 @@ class FormData{
     };
   }
 }
+
+
+class MeasurementGroupedByDate{
+  Measurement? weight;
+  Measurement? height;
+  Measurement bmi;
+  bool selected;
+  String date;
+  MeasurementGroupedByDate({this.weight,this.height,required this.bmi,this.selected=false,required this.date});
+}

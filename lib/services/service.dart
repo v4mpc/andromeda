@@ -178,6 +178,10 @@ class AppService with ChangeNotifier {
     return data;
   }
 
+
+  Future<List<MeasurementGroupedByDate>> getAllMeasurements()async{
+    final measurements= await _databaseService.getAllMeasurements();
+  }
   @override
   void dispose() async {
     // TODO: implement dispose
