@@ -21,8 +21,16 @@ class _MeasurementListPageState extends State<MeasurementListPage> {
     }
   }
 
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   print('init state called');
+  //   selectedItems=widget.myList.where((MeasurementGroupedByDate element) => element.selected==true).toList().length;
+  // }
+
   @override
   Widget build(BuildContext context) {
+    selectedItems=widget.myList.where((MeasurementGroupedByDate element) => element.selected==true).toList().length;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
