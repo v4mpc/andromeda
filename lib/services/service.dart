@@ -190,6 +190,7 @@ class AppService with ChangeNotifier {
 
       myList.add(MeasurementGroupedByDate(value));
     });
+    print(measurements);
     return myList;
   }
 

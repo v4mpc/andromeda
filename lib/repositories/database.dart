@@ -67,7 +67,32 @@ class DBSingleton {
       await txn.insert('measurement_types', {'id': 1, 'name': 'WEIGHT'});
       await txn.insert('measurement_types', {'id': 2, 'name': 'HEIGHT'});
       await txn.insert('measurement_types', {'id': 3, 'name': 'BMI'});
+      // await txn.insert(
+      //   'measurements',
+      //   {
+      //     'id': 1,
+      //     'measurement_type_id': 1,
+      //     'unit_id': 1,
+      //     'value': 80,
+      //     'created_at': '2022-01-23'
+      //   },
+      //   conflictAlgorithm: ConflictAlgorithm.replace,
+      // );
+      //
+      // await txn.insert(
+      //   'measurements',
+      //   {
+      //     'id': 2,
+      //     'measurement_type_id': 1,
+      //     'unit_id': 1,
+      //     'value': 8,
+      //     'created_at': '2021-01-23'
+      //   },
+      //   conflictAlgorithm: ConflictAlgorithm.replace,
+      // );
     });
+
+
   }
 
   Future measurements(query) async {
