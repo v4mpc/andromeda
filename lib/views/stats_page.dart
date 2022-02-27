@@ -21,7 +21,6 @@ class StatsPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
         title: Text('Statistics'),
       ),
       body: Padding(

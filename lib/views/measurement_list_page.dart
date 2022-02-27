@@ -36,7 +36,6 @@ class _MeasurementListPageState extends State<MeasurementListPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
         leading: Visibility(
           maintainSize: false,
           visible: widget.myList.isNotEmpty,

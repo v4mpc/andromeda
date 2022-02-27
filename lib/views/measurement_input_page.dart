@@ -60,7 +60,6 @@ class _MeasurementInputPageState extends State<MeasurementInputPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
           title: Text('Measurement Input'),
         ),
         body: Form(

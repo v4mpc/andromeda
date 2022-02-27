@@ -44,7 +44,6 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
           Navigator.of(context).pushNamed(MeasurementInputPage.route);
         },

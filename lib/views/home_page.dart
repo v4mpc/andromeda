@@ -13,7 +13,6 @@ class HomePage extends StatelessWidget {
         resizeToAvoidBottomInset: false,
 
         appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
     title: Text('Dashboard'),
           // actions: [
           //   IconButton(

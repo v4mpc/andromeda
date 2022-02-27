@@ -7,6 +7,7 @@ import 'services/service.dart';
 import 'package:provider/provider.dart';
 import 'views/stats_page.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
@@ -25,10 +26,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_)=>AppService())
       ],
       child: MaterialApp(
+        
         title: 'Andromeda',
-        theme: CustomTheme.lightTheme,
+        // theme: CustomTheme.lightTheme,
         // darkTheme: CustomTheme.darkTheme,
-        themeMode: ThemeMode.system,
+        theme: CustomTheme.kShrineTheme,
+        // themeMode: ThemeMode.system,
         routes: {
           '/': (context) => MainPage(),
           MainPage.route: (context) => MainPage(),

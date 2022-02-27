@@ -33,7 +33,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   _onTapItem(index);
                 },
                 child: IconTheme(
-                  data: IconThemeData(size: currentIndex==index?35:25, color: Theme.of(context).primaryColor),
+                  data: IconThemeData(size: currentIndex==index?35:25,),
                   child: item.icon,
                 ));
           }).toList(),
