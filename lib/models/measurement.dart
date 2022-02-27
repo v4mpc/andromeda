@@ -111,8 +111,35 @@ class FormData{
 class MeasurementGroupedByDate{
   Measurement? weight;
   Measurement? height;
-  Measurement bmi;
-  bool selected;
-  String date;
-  MeasurementGroupedByDate({this.weight,this.height,required this.bmi,this.selected=false,required this.date});
+  Measurement? bmi;
+  bool? selected;
+  MeasurementGroupedByDate({this.weight,this.height,this.bmi,this.selected});
+
+  MeasurementGroupedByDate.fromList(List<Map<dynamic, dynamic>> myList){
+      for(var m in myList){
+        if (m['mt_name']=='HEIGHT'){
+          height=Measurement.fromMap(m);
+        }else if(m['mt_name']=='HEIGHT'){
+          weight=Measurement.fromMap(m);
+        }else if(m['mt_name']=='BMI'){
+          bmi=Measurement.fromMap(m);
+        }
+      }
+      selected=false;
+  }
+
+  List<int> toIds(){
+    List<int> myList=[];
+    if(weight!=null){
+      myList.add(weight!.id);
+    }
+    if(height!=null){
+      myList.add(height!.id);
+    }
+    if(bmi!=null){
+      myList.add(weight!.id);
+    }
+    return myList;
+
+  }
 }

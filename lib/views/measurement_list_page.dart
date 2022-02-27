@@ -89,14 +89,16 @@ class _MeasurementListPageState extends State<MeasurementListPage> {
           },
         ),
         title: selectedItems <= 0
-            ? Text('Measurements')
+            ? const Text('Measurements')
             : Text('$selectedItems Selected'),
         actions: [
           if (selectedItems > 0)
             IconButton(
               icon: const Icon(Icons.delete),
               tooltip: 'Increase volume by 10',
-              onPressed: () {},
+              onPressed: () {
+
+              },
             )
         ],
       ),

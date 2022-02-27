@@ -149,4 +149,20 @@ class DBSingleton {
     final db = await database;
     return await db.rawQuery('$baseMeasurementQuery ORDER By m.id DESC');
   }
+  
+  Future<void> deleteMeasurements(List<int> ids)async{
+    if (ids.isEmpty){
+      return;
+    }
+    final db=await database;
+    var myStringIds='';
+    for (var i=0;i<=ids.length;++i){
+      if(i+1==ids.length){
+        myStringIds+='${ids[i]}';
+      }else{
+        myStringIds+='${ids[i]},';
+      }
+    }
+    await db.rawQuery('DELETE FROM measurements where id in ($myStringIds)');
+}
 }
