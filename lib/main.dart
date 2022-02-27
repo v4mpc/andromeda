@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 
         title: 'Andromeda',
 
-        darkTheme: CustomTheme.darkTheme,
+        // darkTheme: CustomTheme.darkTheme,
         theme: CustomTheme.lightTheme,
         themeMode: ThemeMode.system,
         routes: {

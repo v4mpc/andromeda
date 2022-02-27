@@ -29,7 +29,7 @@ class CustomTheme {
         onSecondary: kOnSecondary,
         error: kError,
       ),
-      bottomAppBarColor: kBottomBar,
+      bottomAppBarColor: kPrimary,
       // textTheme: _buildShrineTextTheme(base.textTheme),
       // textSelectionTheme: const TextSelectionThemeData(
       //   selectionColor: kShrinePink100,
