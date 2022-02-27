@@ -26,12 +26,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_)=>AppService())
       ],
       child: MaterialApp(
-        
+
         title: 'Andromeda',
-        // theme: CustomTheme.lightTheme,
-        // darkTheme: CustomTheme.darkTheme,
-        theme: CustomTheme.kShrineTheme,
-        // themeMode: ThemeMode.system,
+
+        darkTheme: CustomTheme.darkTheme,
+        theme: CustomTheme.lightTheme,
+        themeMode: ThemeMode.system,
         routes: {
           '/': (context) => MainPage(),
           MainPage.route: (context) => MainPage(),

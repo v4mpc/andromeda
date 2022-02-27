@@ -8,3 +8,13 @@ const kShrineBrown900 = Color(0xFF442B2D);
 const kShrineErrorRed = Color(0xFFC5032B);
 const kShrineSurfaceWhite = Color(0xFFFFFBFA);
 const kShrineBackgroundWhite = Colors.white;
+
+
+const kPrimary=Color(0xFFFF5722);
+const kOnPrimary=Colors.white;
+const kSecondary=Color(0xFFFF6F00);
+const kOnSecondary=Colors.white;
+const kError=Color(0xFFC5032B);
+const kBottomBar=Color(0xFFffccbc);
+
+

@@ -29,6 +29,7 @@ class _MainPageState extends State<MainPage> {
         children: pages,
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
+
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: [

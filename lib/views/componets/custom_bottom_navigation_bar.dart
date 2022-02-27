@@ -29,13 +29,17 @@ class CustomBottomNavigationBar extends StatelessWidget {
           children: items.map((CustomBottomNavigationBarItem item) {
             int index = items.indexOf(item);
             return GestureDetector(
-                onTap: () {
-                  _onTapItem(index);
-                },
-                child: IconTheme(
-                  data: IconThemeData(size: currentIndex==index?35:25,),
-                  child: item.icon,
-                ));
+              onTap: () {
+                _onTapItem(index);
+              },
+              child: IconTheme(
+                data: IconThemeData(
+                  size: currentIndex == index ? 35 : 25,
+                  color: Theme.of(context).colorScheme.onPrimary
+                ),
+                child: item.icon,
+              ),
+            );
           }).toList(),
         ),
       ),
@@ -49,14 +53,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
 class CustomBottomNavigationBarItem {
   final Widget icon;
-  final Color activeColor;
-  final Color? inactiveColor;
 
   const CustomBottomNavigationBarItem({
     Key? key,
     required this.icon,
-    this.activeColor = Colors.blue,
-    this.inactiveColor,
   });
 
 // @override
