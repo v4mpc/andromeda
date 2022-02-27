@@ -1,6 +1,11 @@
+import 'package:flutter/material.dart';
+
 import 'measurement_type.dart';
 import 'measurement_unit.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:developer';
+
 
 class Measurement {
   int id;
@@ -8,7 +13,7 @@ class Measurement {
   num value;
   MeasurementType type;
   MeasurementUnit unit;
-  num mobility;
+  num? mobility;
 
   Measurement({
     required this.id,
@@ -36,6 +41,14 @@ class Measurement {
         type = MeasurementType(id: map['mt_id'], name: map['mt_name']),
         unit = MeasurementUnit(id: map['mu_id'], name: map['mu_name']),
         mobility = map['mobility'];
+
+
+  Measurement.fromMapWithoutMobility(Map<String, dynamic> map)
+      : id = map['id'],
+        date = map['date'],
+        value = map['value'],
+        type = MeasurementType(id: map['mt_id'], name: map['mt_name']),
+        unit = MeasurementUnit(id: map['mu_id'], name: map['mu_name']);
 
 
   @override
@@ -113,33 +126,35 @@ class MeasurementGroupedByDate{
   Measurement? height;
   Measurement? bmi;
   bool? selected;
-  MeasurementGroupedByDate({this.weight,this.height,this.bmi,this.selected});
+  // MeasurementGroupedByDate({this.weight,this.height,this.bmi,this.selected});
 
-  MeasurementGroupedByDate.fromList(List<Map<String, dynamic>> myList){
+  MeasurementGroupedByDate(List<Map<String, dynamic>> myList){
+
       for(var m in myList){
         if (m['mt_name']=='HEIGHT'){
-          height=Measurement.fromMap(m);
-        }else if(m['mt_name']=='HEIGHT'){
-          weight=Measurement.fromMap(m);
+          height=Measurement.fromMapWithoutMobility(m);
+        }else if(m['mt_name']=='WEIGHT'){
+          weight=Measurement.fromMapWithoutMobility(m);
         }else if(m['mt_name']=='BMI'){
-          bmi=Measurement.fromMap(m);
+          bmi=Measurement.fromMapWithoutMobility(m);
         }
       }
+
       selected=false;
   }
 
-  List<int> toIds(){
-    List<int> myList=[];
+  List<int> toDeleteIds(){
+    Set<int> mySet={};
     if(weight!=null){
-      myList.add(weight!.id);
+      mySet.add(weight!.id);
     }
     if(height!=null){
-      myList.add(height!.id);
+      mySet.add(height!.id);
     }
     if(bmi!=null){
-      myList.add(weight!.id);
+      mySet.add(bmi!.id);
     }
-    return myList;
+    return mySet.toList();
 
   }
 }

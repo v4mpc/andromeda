@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'home_page.dart';
 import 'stats_page.dart';
 import 'componets/all_componets.dart';
+import 'measurement_list_controller_page.dart';
 import 'measurement_list_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  final pages = [HomePage(), StatsPage(), MeasurementListPage()];
+  final pages = [HomePage(), StatsPage(), MeasurementListControllerPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class _MainPageState extends State<MainPage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 

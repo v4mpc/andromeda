@@ -180,12 +180,15 @@ class AppService with ChangeNotifier {
   }
 
 
-  Future<List<MeasurementGroupedByDate?>> getAllMeasurements()async{
+  Future<List<MeasurementGroupedByDate>> getAllMeasurements()async{
     final List<Map<String,dynamic>> measurements= await _databaseService.getAllMeasurements();
+
     final Map<String,List<Map<String,dynamic>>> newMap = groupBy(measurements, (Map<dynamic,dynamic> obj) => obj['date']);
+
     List<MeasurementGroupedByDate> myList=[];
     newMap.forEach((String key, List <Map<String,dynamic>>value) {
-      myList.add(MeasurementGroupedByDate.fromList(value));
+
+      myList.add(MeasurementGroupedByDate(value));
     });
     return myList;
   }
@@ -193,13 +196,18 @@ class AppService with ChangeNotifier {
   Future<void> deleteSelectedMeasurements(List<MeasurementGroupedByDate> measurements)async{
 
     final List<List<int>> myList=List.generate(measurements.length, (i) {
-      return measurements[i].toIds();
+      if(measurements[i].selected==true) {
+        return measurements[i].toDeleteIds();
+      }else{
+        return [];
+      }
     });
 
     List<int> ids=[];
     for (var x in myList){
       ids+=x;
     }
+    print(ids);
     await _databaseService.deleteMeasurements(ids);
     notifyListeners();
   }

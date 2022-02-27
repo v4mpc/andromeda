@@ -36,9 +36,9 @@ class DBSingleton {
   Future<Database> _init() async {
     final dbPath = join(await getDatabasesPath(), _dbName);
     debugPrint(dbPath);
-    // if (await databaseExists(dbPath)) {
-    //   await deleteDatabase(dbPath);
-    // }
+    if (await databaseExists(dbPath)) {
+      await deleteDatabase(dbPath);
+    }
 
     return await openDatabase(dbPath,
         version: _dbVersion, onCreate: _onCreate, onConfigure: _onConfigure);
@@ -147,22 +147,26 @@ class DBSingleton {
 
   Future getAllMeasurements() async {
     final db = await database;
+
     return await db.rawQuery('$baseMeasurementQuery ORDER By m.id DESC');
+    // print(hel);
+    // return hel;
   }
-  
-  Future<void> deleteMeasurements(List<int> ids)async{
-    if (ids.isEmpty){
+
+  Future<void> deleteMeasurements(List<int> ids) async {
+    if (ids.isEmpty) {
       return;
     }
-    final db=await database;
-    var myStringIds='';
-    for (var i=0;i<=ids.length;++i){
-      if(i+1==ids.length){
-        myStringIds+='${ids[i]}';
-      }else{
-        myStringIds+='${ids[i]},';
+    var myStringIds = '';
+    for (var i = 0; i < ids.length; ++i) {
+      if (i + 1 == ids.length) {
+        myStringIds += '${ids[i]}';
+      } else {
+        myStringIds += '${ids[i]},';
       }
     }
+
+    final db = await database;
     await db.rawQuery('DELETE FROM measurements where id in ($myStringIds)');
-}
+  }
 }

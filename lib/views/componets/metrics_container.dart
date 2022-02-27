@@ -39,7 +39,7 @@ class MetricsContainer extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(8.0),
             child: MobilityIndicator(
-                number: measurement?.mobility.toDouble() ?? 0),
+                number: measurement?.mobility!.toDouble() ?? 0),
           ),
         Text(
           measurement!=null?_formatDate(measurement!.date):'-',

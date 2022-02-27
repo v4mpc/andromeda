@@ -1,7 +1,12 @@
+import 'package:andromeda/services/service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:andromeda/models/all_models.dart';
 
 class MeasurementListPage extends StatefulWidget {
-  const MeasurementListPage({Key? key}) : super(key: key);
+  List<MeasurementGroupedByDate> myList;
+
+  MeasurementListPage({Key? key, required this.myList}) : super(key: key);
 
   @override
   State<MeasurementListPage> createState() => _MeasurementListPageState();
@@ -9,63 +14,10 @@ class MeasurementListPage extends StatefulWidget {
 
 class _MeasurementListPageState extends State<MeasurementListPage> {
   int selectedItems = 0;
-  List myList = [
-    {
-      'weight': {'id': 5, 'value': '70 Kg', 'selected': false},
-      'height': {'id': 5, 'value': '710 Cm', 'selected': false},
-      'bmi': {'id': 5, 'value': '12 bmi', 'selected': false},
-      'selected': false,
-      'date': '2022-04-04'
-    },
-    {
-      'weight': {'id': 5, 'value': '70 Kg', 'selected': false},
-      'height': {'id': 5, 'value': '710 Cm', 'selected': false},
-      'bmi': {'id': 5, 'value': '12 bmi', 'selected': false},
-      'selected': false
-    },
-    {
-      'weight': {'id': 5, 'value': '70 Kg', 'selected': false},
-      'height': {'id': 5, 'value': '710 Cm', 'selected': false},
-      'bmi': {'id': 5, 'value': '12 bmi', 'selected': false},
-      'selected': false
-    },
-    {
-      'weight': {'id': 5, 'value': '70 Kg', 'selected': false},
-      'height': {'id': 5, 'value': '710 Cm', 'selected': false},
-      'bmi': {'id': 5, 'value': '12 bmi', 'selected': false},
-      'selected': false
-    },
-    {
-      'weight': {'id': 5, 'value': '70 Kg', 'selected': false},
-      'height': {'id': 5, 'value': '710 Cm', 'selected': false},
-      'bmi': {'id': 5, 'value': '12 bmi', 'selected': false},
-      'selected': false
-    },
-    {
-      'weight': {'id': 5, 'value': '70 Kg', 'selected': false},
-      'height': {'id': 5, 'value': '710 Cm', 'selected': false},
-      'bmi': {'id': 5, 'value': '12 bmi', 'selected': false},
-      'selected': false
-    },
-    {
-      'weight': {'id': 5, 'value': '70 Kg', 'selected': false},
-      'height': {'id': 5, 'value': '710 Cm', 'selected': false},
-      'bmi': {'id': 5, 'value': '12 bmi', 'selected': false},
-      'selected': false
-    },
-    {
-      'weight': {'id': 5, 'value': '70 Kg', 'selected': false},
-      'height': {'id': 5, 'value': '710 Cm', 'selected': false},
-      'bmi': {'id': 5, 'value': '12 bmi', 'selected': false},
-      'selected': false
-    },
-  ];
 
-
-
-  set selectedStated(bool value){
-    for (var m in myList) {
-      m['selected']=value;
+  set selectedStated(bool value) {
+    for (var m in widget.myList) {
+      m.selected = value;
     }
   }
 
@@ -75,18 +27,23 @@ class _MeasurementListPageState extends State<MeasurementListPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        leading: Checkbox(
-          value: selectedItems >= myList.length,
-          onChanged: (bool? value) {
-            if (value ?? false) {
-              selectedItems = myList.length;
-              selectedStated=true;
-            } else {
-              selectedItems = 0;
-              selectedStated=false;
-            }
-            setState(() {});
-          },
+        leading: Visibility(
+          maintainSize: false,
+          visible: widget.myList.isNotEmpty,
+          child: Checkbox(
+            value: selectedItems >= widget.myList.length &&
+                widget.myList.isNotEmpty,
+            onChanged: (bool? value) {
+              if (value ?? false) {
+                selectedItems = widget.myList.length;
+                selectedStated = true;
+              } else {
+                selectedItems = 0;
+                selectedStated = false;
+              }
+              setState(() {});
+            },
+          ),
         ),
         title: selectedItems <= 0
             ? const Text('Measurements')
@@ -95,80 +52,77 @@ class _MeasurementListPageState extends State<MeasurementListPage> {
           if (selectedItems > 0)
             IconButton(
               icon: const Icon(Icons.delete),
-              tooltip: 'Increase volume by 10',
+              tooltip: 'Delete selected item(s)',
               onPressed: () {
-
+                Provider.of<AppService>(context,listen: false).deleteSelectedMeasurements(widget.myList);
+                selectedItems=0;
               },
             )
         ],
       ),
       body: Container(
-        child: ListView.builder(
-          itemCount: myList.length,
-          itemBuilder: (context, index) {
-            return _buildCheckboxListTile(context, index);
-          },
-        ),
+        child: widget.myList.isNotEmpty ? _buildListView() : Container(),
       ),
     );
   }
 
-
-  Widget _buildListTile(BuildContext context, int index) {
-    return GestureDetector(
-      onLongPress:(){
-        setState(() {
-          myList[index]['selected']=true;
-          ++selectedItems;
-        });
-      } ,
-      child: ListTile(
-        title: RichText(
-          text: TextSpan(
-              style: DefaultTextStyle.of(context).style,
-              children: [
-                TextSpan(text: myList[index]['weight']['value']),
-                TextSpan(text: ' / '),
-                TextSpan(text: myList[index]['height']['value']),
-                TextSpan(text: ' / '),
-                TextSpan(text: myList[index]['bmi']['value'])
-              ]),
-        ),
-        subtitle: Text('26 Feb 2021'),
-
-      ),
+  Widget _buildListView() {
+    return ListView.builder(
+      itemCount: widget.myList.length,
+      itemBuilder: (context, index) {
+        return _buildCheckboxListTile(context, index);
+      },
     );
+  }
+
+
+  Widget _buildSubTitle(int index) {
+    if(widget.myList[index].weight != null){
+      return Text(widget.myList[index].weight!.date);
+    }else if (widget.myList[index].height != null){
+      return Text(widget.myList[index].height!.date);
+    }else if(widget.myList[index].bmi != null){
+      return Text(widget.myList[index].bmi!.date);
+    }else{
+      return const Text('');
+    }
+
   }
 
   Widget _buildCheckboxListTile(BuildContext context, int index) {
+
     return CheckboxListTile(
-            title: RichText(
-              text: TextSpan(
-                  style: DefaultTextStyle.of(context).style,
-                  children: [
-                    TextSpan(text: '${myList[index]['weight']['value']} / '),
-                    TextSpan(text: '${myList[index]['height']['value']} / '),
-                    TextSpan(text: myList[index]['bmi']['value'])
-                  ]),
-            ),
-            subtitle: Text('26 Feb 2021'),
-            // tileColor: Colors.green,
-            value: myList[index]['selected'],
-            onChanged: (bool? value) {
-              setState(() {
-                bool _itemSelection = value ?? false;
-                myList[index]['selected'] = _itemSelection;
-                if (_itemSelection) {
-                  ++selectedItems;
-                } else {
-                  --selectedItems;
-                }
-              });
-              assert(selectedItems < 0);
-              assert(selectedItems > myList.length);
-            },
-            secondary: const Icon(Icons.square_foot_outlined),
-            controlAffinity: ListTileControlAffinity.leading,
-          );
+      title: RichText(
+        text: TextSpan(
+          style: DefaultTextStyle.of(context).style,
+          children: [
+            if (widget.myList[index].weight != null)
+              TextSpan(text: '${widget.myList[index].weight!.value} ${widget.myList[index].weight!.unit.name} / '),
+            if (widget.myList[index].height != null)
+              TextSpan(text: '${widget.myList[index].height!.value} ${widget.myList[index].height!.unit.name} / '),
+            if (widget.myList[index].bmi != null)
+              TextSpan(text: '${widget.myList[index].bmi!.value.toString()} Bmi')
+          ],
+        ),
+      ),
+      subtitle: _buildSubTitle(index),
+      // tileColor: Colors.green,
+      value: widget.myList[index].selected,
+      onChanged: (bool? value) {
+        setState(() {
+          bool _itemSelection = value ?? false;
+          widget.myList[index].selected = _itemSelection;
+          if (_itemSelection) {
+            ++selectedItems;
+          } else {
+            --selectedItems;
+          }
+        });
+        assert(selectedItems >= 0 && selectedItems<=widget.myList.length);
+
+      },
+      secondary: const Icon(Icons.square_foot_outlined),
+      controlAffinity: ListTileControlAffinity.leading,
+    );
   }
 }
