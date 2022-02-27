@@ -1,7 +1,9 @@
 import 'package:andromeda/services/service.dart';
+import 'package:andromeda/services/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:andromeda/models/all_models.dart';
+import '../services/utils.dart';
 
 class MeasurementListPage extends StatefulWidget {
   List<MeasurementGroupedByDate> myList;
@@ -86,11 +88,11 @@ class _MeasurementListPageState extends State<MeasurementListPage> {
 
   Widget _buildSubTitle(int index) {
     if(widget.myList[index].weight != null){
-      return Text(widget.myList[index].weight!.date);
+      return Text(Util.formatDate(widget.myList[index].weight!.date));
     }else if (widget.myList[index].height != null){
-      return Text(widget.myList[index].height!.date);
+      return Text(Util.formatDate(widget.myList[index].height!.date));
     }else if(widget.myList[index].bmi != null){
-      return Text(widget.myList[index].bmi!.date);
+      return Text(Util.formatDate(widget.myList[index].bmi!.date));
     }else{
       return const Text('');
     }
