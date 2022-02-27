@@ -115,7 +115,7 @@ class MeasurementGroupedByDate{
   bool? selected;
   MeasurementGroupedByDate({this.weight,this.height,this.bmi,this.selected});
 
-  MeasurementGroupedByDate.fromList(List<Map<dynamic, dynamic>> myList){
+  MeasurementGroupedByDate.fromList(List<Map<String, dynamic>> myList){
       for(var m in myList){
         if (m['mt_name']=='HEIGHT'){
           height=Measurement.fromMap(m);

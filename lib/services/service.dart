@@ -181,10 +181,10 @@ class AppService with ChangeNotifier {
 
 
   Future<List<MeasurementGroupedByDate?>> getAllMeasurements()async{
-    final List<Map<dynamic,dynamic>> measurements= await _databaseService.getAllMeasurements();
-    final Map<String,List<Map>> newMap = groupBy(measurements, (Map<dynamic,dynamic> obj) => obj['date']);
+    final List<Map<String,dynamic>> measurements= await _databaseService.getAllMeasurements();
+    final Map<String,List<Map<String,dynamic>>> newMap = groupBy(measurements, (Map<dynamic,dynamic> obj) => obj['date']);
     List<MeasurementGroupedByDate> myList=[];
-    newMap.forEach((key, List <Map<dynamic,dynamic>>value) {
+    newMap.forEach((String key, List <Map<String,dynamic>>value) {
       myList.add(MeasurementGroupedByDate.fromList(value));
     });
     return myList;
